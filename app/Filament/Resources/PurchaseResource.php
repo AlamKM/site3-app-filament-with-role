@@ -10,7 +10,6 @@ use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Filament\Resources\Resource;
 use App\Filament\Resources\PurchaseResource\Pages;
-use App\Filament\Resources\PurchaseResource\RelationManagers;
 
 class PurchaseResource extends Resource
 {
@@ -47,7 +46,7 @@ class PurchaseResource extends Resource
                         Forms\Components\Card::make()
                             ->schema([
                                 Forms\Components\Placeholder::make('Product Name'),
-                                Forms\Components\Repeater::make('purchaseItem')
+                                Forms\Components\Repeater::make('PurchaseItem')
                                     ->relationship()
                                     ->schema([
                                         Forms\Components\Select::make('item_id')
@@ -75,6 +74,7 @@ class PurchaseResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('index')->rowIndex(),
                 Tables\Columns\TextColumn::make('date')->date()->sortable(),
                 Tables\Columns\TextColumn::make('no_pr')->label('NO PR'),
                 Tables\Columns\TextColumn::make('no_po')->label('NO PO'),

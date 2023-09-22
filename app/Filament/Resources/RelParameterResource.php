@@ -8,24 +8,22 @@ use App\Models\Parameter;
 use Filament\Tables\Table;
 use App\Models\RelParameter;
 use Filament\Resources\Resource;
-use Forms\Components\Placeholder;
-use Illuminate\Support\HtmlString;
+use Filament\Forms\Components\Card;
 use Filament\Forms\Components\Group;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Section;
-use Filament\Support\Enums\FontFamily;
-use Filament\Forms\Components\Fieldset;
 use Filament\Forms\Components\Repeater;
-use Filament\Forms\Components\CheckboxList;
 use App\Filament\Resources\RelParameterResource\Pages;
 
 class RelParameterResource extends Resource
 {
     protected static ?string $model = RelParameter::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-arrow-path-rounded-square';
 
     protected static ?string $navigationGroup = 'Quality Control';
+
+    protected static ?string $navigationLabel = 'Relasi Item Parameter';
 
     public static function form(Form $form): Form
     {
@@ -35,28 +33,35 @@ class RelParameterResource extends Resource
                     ->schema([
                         Section::make()
                             ->description('Tentukan beberapa pilihan parameter untuk masing-masing item')
-                            ->icon('heroicon-m-beaker')
+                            ->icon('heroicon-m-magnifying-glass-circle')
                             ->columns()
                             ->schema([
                                 Select::make('item_id')
                                     ->required()
+                                    ->unique(ignoreRecord: true)
                                     ->searchable()
                                     ->preload()
                                     ->relationship('item', 'item_name'),
                             ]),
-                        Section::make()
-                            ->description('Tentukan beberapa pilihan parameter untuk masing-masing item')
-                        Forms\Components\Repeater::make('rel_parameter')
-                            ->relationship()
+                        Section::make('ItemParameter')
+                            ->description('Pilihlah Parameter yang sesuai')
+                            ->icon('heroicon-m-beaker')
                             ->schema([
-                                CheckboxList::make('rel_parameter')
-                                    ->options([
-                                        'tailwind' => 'Tailwind CSS',
-                                        'alpine' => 'Alpine.js',
-                                        'laravel' => 'Laravel',
-                                        'livewire' => 'Laravel Livewire',
+                                Card::make()
+                                    ->schema([
+                                        Repeater::make('ItemParameter')
+                                            ->label('List Parameter')
+                                            ->relationship()
+                                            ->schema([
+                                                Select::make('parameter_id')
+                                                    ->label('Parameter')
+                                                    ->options(Parameter::query()->pluck('parameter', 'id'))
+                                                    ->required()
+                                                    ->searchable()
+                                                    ->helperText('Your full name here, including any middle names.')
+                                                    ->columnSpan(['md' => 5]),
+                                            ])
                                     ])
-                                //->options(Parameter::query()->pluck('parameter', 'id'))
                             ])
                     ])->columnSpan('full')
             ]);
@@ -66,10 +71,16 @@ class RelParameterResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('Item.item_name')
+                Tables\Columns\TextColumn::make('index')->rowIndex()->label('No'),
+                Tables\Columns\TextColumn::make('Item.item_code')
+                    ->label('Item Code')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('Parameter.parameter')
+                Tables\Columns\TextColumn::make('Item.item_name')
+                    ->label('Item Name')
+                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('ItemParameter.parameter.parameter')->limit(35)
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
@@ -88,12 +99,12 @@ class RelParameterResource extends Resource
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                // Tables\Actions\BulkActionGroup::make([
+                //     Tables\Actions\DeleteBulkAction::make(),
+                // ]),
             ])
             ->emptyStateActions([
-                Tables\Actions\CreateAction::make(),
+                Tables\Actions\CreateAction::make()->label('Create New Item Parameter'),
             ]);
     }
 
@@ -109,7 +120,7 @@ class RelParameterResource extends Resource
         return [
             'index' => Pages\ListRelParameters::route('/'),
             'create' => Pages\CreateRelParameter::route('/create'),
-            'edit' => Pages\EditRelParameter::route('/{record}/edit'),
+            //'edit' => Pages\EditRelParameter::route('/{record}/edit'),
         ];
     }
 }

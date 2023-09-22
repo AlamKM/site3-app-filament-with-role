@@ -8,7 +8,6 @@ use Filament\Widgets;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
 use App\Filament\Pages\Auth\EditProfile;
-use Filament\Navigation\NavigationGroup;
 use Filament\Http\Middleware\Authenticate;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Cookie\Middleware\EncryptCookies;
@@ -30,6 +29,7 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
+            ->brandName('Site 3 Admin Panel')
             ->sidebarCollapsibleOnDesktop()
             ->userMenuItems([
                 MenuItem::make()

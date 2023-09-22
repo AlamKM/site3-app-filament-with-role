@@ -3,23 +3,21 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\FpaDetailResource\Pages;
-use App\Filament\Resources\FpaDetailResource\RelationManagers;
 use App\Models\Fpa_Detail;
-use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables\Table;
 use Filament\Tables;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class FpaDetailResource extends Resource
 {
     protected static ?string $model = Fpa_Detail::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-book-open';
 
     protected static ?string $navigationGroup = 'Quality Control';
+
+    protected static ?string $navigationLabel = 'FPA Details';
 
     public static function form(Form $form): Form
     {

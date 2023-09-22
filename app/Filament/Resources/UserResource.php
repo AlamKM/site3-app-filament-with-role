@@ -11,13 +11,10 @@ use Filament\Resources\Resource;
 use Filament\Resources\Pages\Page;
 use Illuminate\Support\Facades\Hash;
 use Filament\Tables\Columns\TextColumn;
-use Illuminate\Database\Eloquent\Builder;
 use Filament\Forms\Components\CheckboxList;
 use App\Filament\Resources\UserResource\Pages;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\UserResource\Pages\EditUser;
 use App\Filament\Resources\UserResource\Pages\CreateUser;
-use App\Filament\Resources\UserResource\RelationManagers;
 use App\Filament\Resources\UserResource\RelationManagers\RolesRelationManager;
 use Filament\Tables\Filters\TrashedFilter;
 

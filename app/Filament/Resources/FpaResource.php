@@ -6,28 +6,23 @@ use App\Models\Fpa;
 use Filament\Forms;
 use App\Models\Item;
 use Filament\Tables;
-use Filament\Forms\Get;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
-use App\Models\PurchaseItem;
 use Illuminate\Support\Carbon;
 use Filament\Resources\Resource;
 use Illuminate\Support\Collection;
 use Filament\Forms\Components\Select;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Builder;
-use App\Filament\Components\DynamicItemSelect;
 use App\Filament\Resources\FpaResource\Pages;
 
 class FpaResource extends Resource
 {
     protected static ?string $model = Fpa::class;
 
-    protected static ?string $navigationLabel = 'FPA Records';
+    protected static ?string $navigationLabel = 'FPA';
 
-    protected static ?string $pluralModelLabel = 'FPA Records';
-
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-folder';
 
     protected static ?string $navigationGroup = 'Quality Control';
 

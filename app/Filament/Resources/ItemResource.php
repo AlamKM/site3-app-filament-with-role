@@ -9,10 +9,7 @@ use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Filament\Resources\Resource;
 use Filament\Forms\Components\Card;
-use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\ItemResource\Pages;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
-use App\Filament\Resources\ItemResource\RelationManagers;
 
 class ItemResource extends Resource
 {

@@ -25,7 +25,7 @@ class RelParameter extends Model
         return $this->belongsTo(Parameter::class);
     }
 
-    public function itemparameter()
+    public function ItemParameter()
     {
         return $this->hasMany(ItemParameter::class);
     }
