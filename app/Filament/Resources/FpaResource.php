@@ -6,8 +6,10 @@ use App\Models\Fpa;
 use Filament\Forms;
 use App\Models\Item;
 use Filament\Tables;
+use Filament\Forms\Get;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
+use App\Models\PurchaseItem;
 use Illuminate\Support\Carbon;
 use Filament\Resources\Resource;
 use Illuminate\Support\Collection;
@@ -77,12 +79,14 @@ class FpaResource extends Resource
                             ->live()
                             ->label('NO PO'),
                         Select::make('item_id')
-                            //->relationship('item', 'item_name')
-                            ->options(fn (): Collection => Item::pluck('item_name', 'id'))
+                            ->options(fn ($get) => Item::whereHas('purchaseItems', function ($query) use ($get) {
+                                $query->where('purchase_id', $get('purchase_id'));
+                            })->pluck('item_name', 'id'))
                             ->preload()
                             ->searchable(),
                         Forms\Components\TextInput::make('no_lot')
                             ->maxLength(255)
+                            ->required()
                             ->unique(ignoreRecord: true),
                         Forms\Components\Hidden::make('create_by')
                             ->default(auth()->user()->name),
@@ -110,12 +114,6 @@ class FpaResource extends Resource
                 Tables\Columns\TextColumn::make('item.item_name')->searchable()->sortable(),
                 Tables\Columns\TextColumn::make('no_lot')->searchable()->sortable(),
                 Tables\Columns\TextColumn::make('status_item')->badge(),
-                // Tables\Columns\SelectColumn::make('status_item')
-                //     ->options([
-                //         'Accepted' => 'Accepted',
-                //         'Reject' => 'Reject',
-                //         'Use_as_is' => 'Use as is',
-                //     ]),
                 Tables\Columns\TextColumn::make('create_by')->label('Created by'),
             ])->defaultSort('created_at', 'desc')
             ->filters([
