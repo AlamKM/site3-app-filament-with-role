@@ -13,6 +13,7 @@ use Filament\Forms\Components\Group;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Repeater;
+use Filament\Tables\Filters\TrashedFilter;
 use App\Filament\Resources\RelParameterResource\Pages;
 
 class RelParameterResource extends Resource
@@ -95,10 +96,11 @@ class RelParameterResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                TrashedFilter::make(),
             ])
             ->actions([
                 Tables\Actions\EditAction::make()->iconButton(),
+                Tables\Actions\DeleteAction::make()->iconButton(),
             ])
             ->bulkActions([
                 // Tables\Actions\BulkActionGroup::make([

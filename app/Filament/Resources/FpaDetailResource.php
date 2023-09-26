@@ -7,21 +7,14 @@ use Filament\Forms\Form;
 use App\Models\Fpa_Detail;
 use Filament\Tables\Table;
 use Filament\Resources\Resource;
-use Filament\Forms\Components\Card;
 use Filament\Forms\Components\Group;
-use Filament\Forms\Components\Radio;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Section;
-use Filament\Tables\Actions\EditAction;
-use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\RichEditor;
-use Filament\Forms\Components\Placeholder;
-use Filament\Tables\Actions\DeleteBulkAction;
 use App\Filament\Resources\FpaDetailResource\Pages;
-use App\Filament\Resources\FpaDetailResource\Pages\EditFpaDetail;
-use App\Filament\Resources\FpaDetailResource\Pages\ListFpaDetails;
-use App\Filament\Resources\FpaDetailResource\Pages\CreateFpaDetail;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class FpaDetailResource extends Resource
 {
@@ -99,14 +92,17 @@ class FpaDetailResource extends Resource
 
             ])->defaultSort('created_at', 'desc')
             ->filters([
-                //
+                Tables\Filters\TrashedFilter::make(),
             ])
             ->actions([
                 Tables\Actions\EditAction::make()->iconButton(),
+                //Tables\Actions\DeleteAction::make()->iconButton(),
+                //Tables\Actions\ForceDeleteAction::make(),
+                //Tables\Actions\RestoreAction::make(),
+            ])
+            ->bulkActions([
+                //Tables\Actions\DeleteBulkAction::make(),
             ]);
-        // ->bulkActions([
-        //     Tables\Actions\DeleteBulkAction::make(),
-        // ]);
     }
 
     public static function getRelations(): array
@@ -123,5 +119,13 @@ class FpaDetailResource extends Resource
             'create' => Pages\CreateFpaDetail::route('/create'),
             'edit' => Pages\EditFpaDetail::route('/{record}/edit'),
         ];
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()
+            ->withoutGlobalScopes([
+                SoftDeletingScope::class,
+            ]);
     }
 }

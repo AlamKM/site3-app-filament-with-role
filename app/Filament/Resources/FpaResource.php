@@ -13,6 +13,7 @@ use Filament\Resources\Resource;
 use Filament\Forms\Components\Select;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Builder;
+use Filament\Tables\Filters\TrashedFilter;
 use App\Filament\Resources\FpaResource\Pages;
 
 class FpaResource extends Resource
@@ -145,6 +146,7 @@ class FpaResource extends Resource
 
                         return $indicators;
                     }),
+                TrashedFilter::make(),
             ])
 
             ->actions([
@@ -170,5 +172,13 @@ class FpaResource extends Resource
             'create' => Pages\CreateFpa::route('/create'),
             // 'edit' => Pages\EditFpa::route('/{record}/edit'),
         ];
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()
+            ->withoutGlobalScopes([
+                SoftDeletingScope::class,
+            ]);
     }
 }

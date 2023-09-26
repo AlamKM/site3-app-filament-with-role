@@ -9,6 +9,7 @@ use App\Models\Purchase;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Filament\Resources\Resource;
+use Filament\Tables\Filters\TrashedFilter;
 use App\Filament\Resources\PurchaseResource\Pages;
 
 class PurchaseResource extends Resource
@@ -83,7 +84,7 @@ class PurchaseResource extends Resource
                 Tables\Columns\TextColumn::make('user.name')->label('Created By'),
             ])
             ->filters([
-                //
+                TrashedFilter::make(),
             ])
             ->actions([
                 Tables\Actions\EditAction::make()->iconButton(),

@@ -9,6 +9,7 @@ use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Filament\Resources\Resource;
 use Filament\Forms\Components\Card;
+use Filament\Tables\Filters\TrashedFilter;
 use App\Filament\Resources\ItemResource\Pages;
 
 class ItemResource extends Resource
@@ -60,10 +61,11 @@ class ItemResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                TrashedFilter::make(),
             ])
             ->actions([
                 Tables\Actions\EditAction::make()->iconButton(),
+                Tables\Actions\DeleteAction::make()->iconButton(),
             ]);
         // ->bulkActions([
         //     Tables\Actions\DeleteBulkAction::make(),

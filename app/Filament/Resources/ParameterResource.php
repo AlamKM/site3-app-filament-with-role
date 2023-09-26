@@ -4,11 +4,12 @@ namespace App\Filament\Resources;
 
 use Filament\Forms;
 use Filament\Tables;
-use App\Models\Parameter;
 use Filament\Forms\Form;
+use App\Models\Parameter;
 use Filament\Tables\Table;
 use Filament\Resources\Resource;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\TrashedFilter;
 use App\Filament\Resources\ParameterResource\Pages;
 
 class ParameterResource extends Resource
@@ -31,7 +32,7 @@ class ParameterResource extends Resource
                     ->maxLength(255),
                 Forms\Components\TextInput::make('note')
                     ->maxLength(255),
-            ]);
+            ])->withTrashed();
     }
 
     public static function table(Table $table): Table
@@ -49,10 +50,11 @@ class ParameterResource extends Resource
                     ->dateTime(),
             ])
             ->filters([
-                //
+                TrashedFilter::make(),
             ])
             ->actions([
                 Tables\Actions\EditAction::make()->iconButton(),
+                Tables\Actions\DeleteAction::make()->iconButton(),
             ]);
         // ->bulkActions([
         //     Tables\Actions\DeleteBulkAction::make(),

@@ -41,9 +41,7 @@ class PermissionResource extends Resource
                     ->sortable(['created_at'])
                     ->searchable(),
             ])->defaultSort('created_at', 'desc')
-            ->filters([
-                //
-            ])
+            ->filters([])
             ->actions([
                 Tables\Actions\EditAction::make()->iconButton(),
                 Tables\Actions\DeleteAction::make()->iconButton(),

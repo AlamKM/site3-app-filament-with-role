@@ -2,14 +2,15 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Spatie\Permission\Traits\HasRoles;
 use App\Enums\StatusItem;
+use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Fpa extends Model
 {
-    use HasFactory, HasRoles;
+    use HasFactory, HasRoles, SoftDeletes;
 
     protected $fillable = [
         'item_id',
