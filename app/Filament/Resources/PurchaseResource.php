@@ -74,7 +74,7 @@ class PurchaseResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('index')->rowIndex(),
+                Tables\Columns\TextColumn::make('index')->rowIndex()->label('No'),
                 Tables\Columns\TextColumn::make('date')->date()->sortable(),
                 Tables\Columns\TextColumn::make('no_pr')->label('NO PR'),
                 Tables\Columns\TextColumn::make('no_po')->label('NO PO'),

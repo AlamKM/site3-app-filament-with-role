@@ -8,9 +8,15 @@ use App\Models\Fpa_Detail;
 use Filament\Tables\Table;
 use Filament\Resources\Resource;
 use Filament\Forms\Components\Card;
+use Filament\Forms\Components\Group;
+use Filament\Forms\Components\Radio;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Section;
 use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\Placeholder;
 use Filament\Tables\Actions\DeleteBulkAction;
 use App\Filament\Resources\FpaDetailResource\Pages;
 use App\Filament\Resources\FpaDetailResource\Pages\EditFpaDetail;
@@ -29,18 +35,55 @@ class FpaDetailResource extends Resource
 
     protected static ?string $modelLabel = 'FPA Details';
 
+    protected static array $statuses = [
+        'Accepted' => 'Accepted',
+        'Reject' => 'Reject',
+        'Use as is' => 'Use as is',
+        'Waiting' => 'Waiting',
+    ];
+
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Card::make()
+                Group::make()
                     ->schema([
-                        TextInput::make('no_fpa'),
-                        TextInput::make('item_id'),
-                        TextInput::make('no_lot'),
-                        TextInput::make('status_item'),
-                    ])
-            ]);
+                        Section::make()
+                            ->schema([
+                                TextInput::make('no_fpa')
+                                    ->required()
+                                    ->disabled()
+                                    ->unique(ignoreRecord: true),
+
+                                TextInput::make('item_id')
+                                    ->required()
+                                    ->dehydrated()
+                                    ->unique(ignoreRecord: true),
+
+                                TextInput::make('no_lot')->required()
+                                    ->unique(ignoreRecord: true)
+                                    ->disabled(),
+
+                                RichEditor::make('Note')
+                                    ->toolbarButtons([
+                                        'bold',
+                                        'italic',
+                                        'underline',
+                                    ])
+                                    ->columnSpan('full')
+                            ])->columns(3),
+                    ])->columnSpan(['lg' => 2]),
+
+                Group::make()
+                    ->schema([
+                        Section::make()
+                            ->schema([
+                                Select::make('status_item')
+                                    ->options(self::$statuses)
+                                    ->visible(auth()->user()->name === 'admin'),
+                            ])
+                    ])->columnSpan(['lg' => 1]),
+            ])->columns(3);
     }
 
     public static function table(Table $table): Table

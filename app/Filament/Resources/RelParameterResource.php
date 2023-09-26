@@ -45,13 +45,14 @@ class RelParameterResource extends Resource
                                     ->preload()
                                     ->relationship('item', 'item_name'),
                             ]),
-                        Section::make('ItemParameter')
+                        Section::make('Item Parameter')
                             ->label('Parameter')
                             ->icon('heroicon-m-beaker')
                             ->schema([
                                 Card::make()
                                     ->schema([
                                         Repeater::make('ItemParameter')
+                                            ->disableLabel()
                                             ->relationship()
                                             ->schema([
                                                 Select::make('parameter_id')
@@ -59,7 +60,7 @@ class RelParameterResource extends Resource
                                                     ->options(Parameter::query()->pluck('parameter', 'id'))
                                                     ->required()
                                                     ->searchable()
-                                                    ->helperText('Pilih Parameter Sesuai Kriteria Produk ')
+                                                    ->helperText('Click "Add to item parameter" jika lebih dari satu parameter')
                                                     ->columnSpan(['md' => 5]),
                                             ])
                                     ])
