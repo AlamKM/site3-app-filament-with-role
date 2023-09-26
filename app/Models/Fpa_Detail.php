@@ -9,6 +9,8 @@ class Fpa_Detail extends Model
 {
     use HasFactory;
 
+    protected $table = 'Fpas';
+
     protected $fillable = ['item_id', 'category_id', 'fpa_id', 'relasiparameter_id'];
 
     public function item()

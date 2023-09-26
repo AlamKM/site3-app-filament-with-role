@@ -6,13 +6,10 @@ use App\Models\Fpa;
 use Filament\Forms;
 use App\Models\Item;
 use Filament\Tables;
-use Filament\Forms\Get;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
-use App\Models\PurchaseItem;
 use Illuminate\Support\Carbon;
 use Filament\Resources\Resource;
-use Illuminate\Support\Collection;
 use Filament\Forms\Components\Select;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Builder;
@@ -27,6 +24,8 @@ class FpaResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-folder';
 
     protected static ?string $navigationGroup = 'Quality Control';
+
+    protected static ?string $modelLabel = 'FPA List';
 
     protected static array $statuses = [
         'Accepted' => 'Accepted',

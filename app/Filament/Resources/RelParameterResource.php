@@ -25,6 +25,8 @@ class RelParameterResource extends Resource
 
     protected static ?string $navigationLabel = 'Relasi Item Parameter';
 
+    protected static ?string $modelLabel = 'Relasi Parameter';
+
     public static function form(Form $form): Form
     {
         return $form
