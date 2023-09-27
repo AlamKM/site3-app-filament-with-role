@@ -17,11 +17,11 @@ class Fpa_Detail extends Model
         'status_item' => StatusItem::class
     ];
 
-    protected $fillable = ['fpa_id', 'parameter', 'std_parameter', 'unit', 'hasil_analisa', 'qc_analis', 'tgl_analisa', 'tgl_input'];
+    protected $fillable = ['fpa_id', 'parameter', 'std_parameter', 'unit', 'hasil_analisa', 'qc_analis', 'tgl_analisa', 'tgl_input', 'status_item'];
 
     public function item()
     {
-        return $this->belongsTo(Item::class);
+        return $this->belongsTo(Item::class, 'item_id', 'id');
     }
 
     public function category_item()

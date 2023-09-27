@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('fpa__details', function (Blueprint $table) {
+        Schema::create('fpa_details', function (Blueprint $table) {
             $table->id();
             $table->foreignId('fpa_id')->constrained()->onDelete('cascade');
             $table->string('parameter')->nullable();
@@ -34,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('fpa__details');
+        Schema::dropIfExists('fpa_details');
     }
 };

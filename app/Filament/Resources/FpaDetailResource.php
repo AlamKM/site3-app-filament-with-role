@@ -47,17 +47,15 @@ class FpaDetailResource extends Resource
                             ->schema([
                                 TextInput::make('no_fpa')
                                     ->required()
-                                    ->disabled()
-                                    ->unique(ignoreRecord: true),
+                                    ->disabled(),
 
                                 TextInput::make('item_id')
                                     ->required()
-                                    ->dehydrated()
-                                    ->unique(ignoreRecord: true),
+                                    ->disabled(),
 
                                 TextInput::make('no_lot')->required()
-                                    ->unique(ignoreRecord: true)
-                                    ->disabled(),
+                                    ->disabled()
+                                    ->required(),
 
                                 RichEditor::make('Note')
                                     ->toolbarButtons([
@@ -87,8 +85,9 @@ class FpaDetailResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('No')
                     ->rowIndex(),
+                Tables\Columns\TextColumn::make('created_at')->label('Date')->dateTime('d - M - Y'),
                 Tables\Columns\TextColumn::make('no_fpa')->searchable()->sortable(),
-                Tables\Columns\TextColumn::make('item_id')->searchable()->sortable(),
+                Tables\Columns\TextColumn::make('item.item_name')->searchable()->sortable(),
                 Tables\Columns\TextColumn::make('no_lot')->searchable()->sortable(),
                 Tables\Columns\TextColumn::make('status_item')->badge(),
 

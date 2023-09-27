@@ -19,7 +19,6 @@ class Fpa extends Model
         'no_fpa',
         'no_lot',
         'status_item',
-        'create_by',
         'qcanalis_by',
         'status_fpa',
     ];
@@ -44,6 +43,11 @@ class Fpa extends Model
     }
 
     public function rel_parameter()
+    {
+        return $this->hasMany(RelParameter::class);
+    }
+
+    public function fpa_details()
     {
         return $this->hasMany(RelParameter::class);
     }

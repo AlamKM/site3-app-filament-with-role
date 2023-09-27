@@ -15,13 +15,13 @@ return new class extends Migration
     {
         Schema::create('fpas', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('item_id')->nullable();
+            $table->foreignId('item_id')->constrained()->onDelete('cascade');
             $table->unsignedInteger('purchase_id')->nullable();
             $table->unsignedInteger('category_item_id')->nullable();
             $table->string('no_lot')->nullable();
             $table->string('no_fpa')->nullable();
             $table->string('status_item')->nullable();
-            $table->string('create_by')->nullable();
+            $table->string('qcanalis_by')->nullable();
             $table->string('note')->nullable();
             $table->timestamps();
         });
