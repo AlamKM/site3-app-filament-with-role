@@ -8,6 +8,7 @@ use Filament\Forms\Form;
 use App\Models\Parameter;
 use Filament\Tables\Table;
 use Filament\Resources\Resource;
+use Filament\Forms\Components\Section;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\TrashedFilter;
 use App\Filament\Resources\ParameterResource\Pages;
@@ -24,15 +25,21 @@ class ParameterResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('parameter')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('unit')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('metode')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('note')
-                    ->maxLength(255),
-            ])->withTrashed();
+                Section::make()
+                    ->schema([
+                        Forms\Components\TextInput::make('parameter')
+                            ->maxLength(255)
+                            ->required(),
+                        Forms\Components\TextInput::make('unit')
+                            ->maxLength(255)
+                            ->required(),
+                        Forms\Components\TextInput::make('metode')
+                            ->maxLength(255)
+                            ->required(),
+                        Forms\Components\TextInput::make('note')
+                            ->maxLength(255)
+                    ])->columns(2)
+            ])->columns(2);
     }
 
     public static function table(Table $table): Table

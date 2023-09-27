@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Enums\StatusItem;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -12,7 +13,11 @@ class Fpa_Detail extends Model
 
     protected $table = 'Fpas';
 
-    protected $fillable = ['item_id', 'category_id', 'fpa_id', 'relasiparameter_id'];
+    protected $casts = [
+        'status_item' => StatusItem::class
+    ];
+
+    protected $fillable = ['fpa_id', 'parameter', 'std_parameter', 'unit', 'hasil_analisa', 'qc_analis', 'tgl_analisa', 'tgl_input'];
 
     public function item()
     {
