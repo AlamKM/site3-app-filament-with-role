@@ -11,7 +11,9 @@ class Fpa_Detail extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $table = 'Fpas';
+    //protected $table = 'Fpas';
+
+    protected $table = 'Fpa_Details';
 
     protected $casts = [
         'status_item' => StatusItem::class
@@ -21,7 +23,7 @@ class Fpa_Detail extends Model
 
     public function item()
     {
-        return $this->belongsTo(Item::class, 'item_id', 'id');
+        return $this->belongsTo(Item::class, 'item_id', 'item_name');
     }
 
     public function category_item()

@@ -28,6 +28,8 @@ class Fpa extends Model
         'status_item' => StatusItem::class
     ];
 
+    //protected $table = 'Fpa_Details';
+
     public function item()
     {
         return $this->belongsTo(Item::class);

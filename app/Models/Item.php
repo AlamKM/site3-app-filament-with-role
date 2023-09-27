@@ -54,6 +54,6 @@ class Item extends Model
 
     public function fpadetails()
     {
-        return $this->hasMany(Fpa::class, 'item_id');
+        return $this->hasMany(Fpa::class, 'item_id', 'item_name');
     }
 }

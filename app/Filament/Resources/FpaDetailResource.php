@@ -18,6 +18,8 @@ use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\RichEditor;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Forms\Components\Placeholder;
+use Filament\Infolists\Components\TextEntry;
+use Filament\Infolists\Components\RepeatableEntry;
 use App\Filament\Resources\FpaDetailResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
@@ -48,26 +50,46 @@ class FpaDetailResource extends Resource
                     ->schema([
                         Section::make()
                             ->schema([
-                                TextInput::make('no_fpa')
-                                    ->required()
-                                    ->disabled(),
+                                RepeatableEntry::make('fpa')
+                                    ->schema([
+                                        TextEntry::make('no_fpa'),
+                                        TextEntry::make('item_id'),
+                                        TextEntry::make('no_lot')
+                                            ->columnSpan(2),
+                                    ])
+                                // TextInput::make('no_fpa')
+                                //     ->required()
+                                //     ->disabled(),
 
-                                TextInput::make('item_id')
-                                    ->required()
-                                    ->disabled(),
+                                // TextInput::make('item_id')
+                                //     ->required()
+                                //     ->disabled(),
 
-                                TextInput::make('no_lot')->required()
-                                    ->disabled()
-                                    ->required(),
+                                // TextInput::make('no_lot')->required()
+                                //     ->disabled()
+                                //     ->required(),
 
-                                TextInput::make('note')
-                                    ->columnSpan('full'),
+                                // TextInput::make('note')
+                                //     ->columnSpan('full'),
                             ])->columns(3),
 
                         Card::make()
                             ->schema([
                                 Placeholder::make('')
                                     ->label('Hasil Analisa Tiap-tiap Parameter'),
+                                //TextInput::make('parameter'),
+                                TextInput::make('std_parameter'),
+                                TextInput::make('unit'),
+                                TextInput::make('hasil_analisa'),
+                                TextInput::make('qc_analis'),
+                                DatePicker::make('tgl_analisa')
+                                    ->label('Tanggal Analisa')
+                                    ->default(now())
+                                    ->required(),
+                                DatePicker::make('tgl_input')
+                                    ->label('Tanggal Input')
+                                    ->default(now())
+                                    ->required(),
                             ]),
                     ])->columnSpan(['lg' => 2]),
 
