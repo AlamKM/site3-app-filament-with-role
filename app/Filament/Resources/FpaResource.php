@@ -12,6 +12,7 @@ use Illuminate\Support\Carbon;
 use Filament\Resources\Resource;
 use Filament\Forms\Components\Select;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Forms\Components\RichEditor;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Tables\Filters\TrashedFilter;
 use App\Filament\Resources\FpaResource\Pages;
@@ -83,11 +84,13 @@ class FpaResource extends Resource
                                 $query->where('purchase_id', $get('purchase_id'));
                             })->pluck('item_name', 'id'))
                             ->preload()
-                            ->searchable(),
+                            ->searchable()
+                            ->label('Item Name'),
                         Forms\Components\TextInput::make('no_lot')
                             ->maxLength(255)
                             ->required()
                             ->unique(ignoreRecord: true),
+                        Forms\Components\TextInput::make('note'),
                         Forms\Components\Hidden::make('create_by')
                             ->default(auth()->user()->name),
                         Forms\Components\Hidden::make('status_item')
@@ -112,8 +115,9 @@ class FpaResource extends Resource
                 Tables\Columns\TextColumn::make('created_at')->label('Date')->dateTime('d - M - Y'),
                 Tables\Columns\TextColumn::make('no_fpa')->searchable()->sortable(),
                 Tables\Columns\TextColumn::make('item.item_name')->searchable()->sortable(),
-                Tables\Columns\TextColumn::make('no_lot')->searchable()->sortable(),
+                Tables\Columns\TextColumn::make('no_lot')->searchable()->sortable()->limit(35),
                 Tables\Columns\TextColumn::make('status_item')->badge(),
+                Tables\Columns\TextColumn::make('note')->limit(35),
                 Tables\Columns\TextColumn::make('create_by')->label('Created by'),
             ])->defaultSort('created_at', 'desc')
             ->filters([

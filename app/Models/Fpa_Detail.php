@@ -17,7 +17,7 @@ class Fpa_Detail extends Model
         'status_item' => StatusItem::class
     ];
 
-    protected $fillable = ['fpa_id', 'parameter', 'std_parameter', 'unit', 'hasil_analisa', 'qc_analis', 'tgl_analisa', 'tgl_input', 'status_item'];
+    protected $fillable = ['fpa_id', 'parameter', 'std_parameter', 'unit', 'hasil_analisa', 'qc_analis', 'tgl_analisa', 'tgl_input', 'status_item', 'note'];
 
     public function item()
     {

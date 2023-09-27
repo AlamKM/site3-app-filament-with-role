@@ -13,6 +13,7 @@ use Filament\Forms\Components\Group;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Repeater;
+use Filament\Forms\Components\TextInput;
 use Filament\Tables\Filters\TrashedFilter;
 use App\Filament\Resources\RelParameterResource\Pages;
 
@@ -61,9 +62,11 @@ class RelParameterResource extends Resource
                                                     ->options(Parameter::query()->pluck('parameter', 'id'))
                                                     ->required()
                                                     ->searchable()
-                                                    ->helperText('Click "Add to item parameter" jika lebih dari satu parameter')
-                                                    ->columnSpan(['md' => 5]),
-                                            ])
+                                                    ->helperText('Click "Add to item parameter" jika lebih dari satu parameter'),
+                                                //->columnSpan(['md' => 5]),
+                                                TextInput::make('std_nilai'),
+                                                TextInput::make('note'),
+                                            ])->columns(3)
                                     ])
                             ])
                     ])->columnSpan('full')

@@ -8,13 +8,16 @@ use App\Models\Fpa_Detail;
 use Filament\Tables\Table;
 use Illuminate\Support\Carbon;
 use Filament\Resources\Resource;
+use Filament\Forms\Components\Card;
 use Filament\Forms\Components\Group;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\RichEditor;
 use Illuminate\Database\Eloquent\Builder;
+use Filament\Forms\Components\Placeholder;
 use App\Filament\Resources\FpaDetailResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
@@ -57,14 +60,15 @@ class FpaDetailResource extends Resource
                                     ->disabled()
                                     ->required(),
 
-                                RichEditor::make('Note')
-                                    ->toolbarButtons([
-                                        'bold',
-                                        'italic',
-                                        'underline',
-                                    ])
-                                    ->columnSpan('full')
+                                TextInput::make('note')
+                                    ->columnSpan('full'),
                             ])->columns(3),
+
+                        Card::make()
+                            ->schema([
+                                Placeholder::make('')
+                                    ->label('Hasil Analisa Tiap-tiap Parameter'),
+                            ]),
                     ])->columnSpan(['lg' => 2]),
 
                 Group::make()
@@ -87,9 +91,10 @@ class FpaDetailResource extends Resource
                     ->rowIndex(),
                 Tables\Columns\TextColumn::make('created_at')->label('Date')->dateTime('d - M - Y'),
                 Tables\Columns\TextColumn::make('no_fpa')->searchable()->sortable(),
-                Tables\Columns\TextColumn::make('item.item_name')->searchable()->sortable(),
-                Tables\Columns\TextColumn::make('no_lot')->searchable()->sortable(),
+                Tables\Columns\TextColumn::make('item.item_name')->searchable()->sortable()->limit(25),
+                Tables\Columns\TextColumn::make('no_lot')->searchable()->sortable()->limit(25),
                 Tables\Columns\TextColumn::make('status_item')->badge(),
+                Tables\Columns\TextColumn::make('note')->limit(35),
 
             ])->defaultSort('created_at', 'desc')
             ->filters([

@@ -21,6 +21,7 @@ class Fpa extends Model
         'status_item',
         'qcanalis_by',
         'status_fpa',
+        'note'
     ];
 
     protected $casts = [

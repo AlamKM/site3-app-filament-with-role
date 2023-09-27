@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('rel_parameter_id')->constrained()->onDelete('cascade');
             $table->foreignId('parameter_id')->constrained()->onDelete('cascade');
+            $table->string('std_nilai')->nullable();
+            $table->string('note')->nullable();
             $table->timestamps();
         });
     }

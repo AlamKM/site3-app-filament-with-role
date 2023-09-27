@@ -13,6 +13,8 @@ class ItemParameter extends Model
     protected $fillable = [
         'item_id',
         'parameter_id',
+        'std_nilai',
+        'note'
     ];
 
     protected $table = 'item_parameters';
