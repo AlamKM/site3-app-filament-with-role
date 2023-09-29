@@ -14,10 +14,15 @@ class CategoryItemSeeder extends Seeder
     public function run(): void
     {
         CategoryItem::create([
+            'category' => 'Packaging Material',
+        ]);
+
+        CategoryItem::create([
             'category' => 'Raw Material',
         ]);
+
         CategoryItem::create([
-            'category' => 'Packaging Material',
+            'category' => 'Finished Goods',
         ]);
     }
 }

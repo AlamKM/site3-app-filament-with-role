@@ -7,11 +7,15 @@ use Filament\Forms;
 use App\Models\Item;
 use Filament\Tables;
 use Filament\Forms\Form;
+use App\Models\Parameter;
 use Filament\Tables\Table;
 use Illuminate\Support\Carbon;
 use Filament\Resources\Resource;
+use Filament\Forms\Components\Card;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Repeater;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\RichEditor;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Tables\Filters\TrashedFilter;
@@ -98,8 +102,36 @@ class FpaResource extends Resource
                         Forms\Components\Radio::make('status_item')
                             ->options(self::$statuses)
                             ->visible(auth()->user()->name === 'admin')
-
                     ]),
+                Forms\Components\Section::make('Parameter')
+                    ->visible(auth()->user()->name === 'admin')
+                    ->label('Parameter')
+                    ->icon('heroicon-m-beaker')
+                    ->schema([
+                        Card::make()
+                            ->schema([
+                                Repeater::make('Fpa_Details')
+                                    ->label('Hasil Analisa Dari Tiap Parameter')
+                                    ->relationship()
+                                    ->schema([
+                                        Select::make('parameter')
+                                            ->default(NULL)
+                                            ->label('Parameter')
+                                            ->options(Parameter::query()->pluck('parameter', 'id'))
+                                            ->searchable()
+                                            ->helperText('Click "Add to item parameter" jika lebih dari satu parameter'),
+                                        TextInput::make('unit'),
+                                        TextInput::make('std_parameter')
+                                            ->label('Standard'),
+                                        TextInput::make('hasil_analisa'),
+                                        TextInput::make('qc_analis'),
+                                        TextInput::make('note'),
+                                        Forms\Components\DatePicker::make('tgl_analisa')
+                                            ->default(now())
+                                            ->required(),
+                                    ])->columns(5)
+                            ])
+                    ])
             ])->columns([
                 'sm' => 4,
                 'lg' => null,
@@ -174,7 +206,7 @@ class FpaResource extends Resource
         return [
             'index' => Pages\ListFpas::route('/'),
             'create' => Pages\CreateFpa::route('/create'),
-            // 'edit' => Pages\EditFpa::route('/{record}/edit'),
+            'edit' => Pages\EditFpa::route('/{record}/edit'),
         ];
     }
 

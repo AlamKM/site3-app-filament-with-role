@@ -14,7 +14,7 @@ class Purchase extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['user_id', 'no_pr', 'no_po', 'date', 'req_date', 'note'];
+    protected $fillable = ['user_id', 'no_pr', 'no_po', 'local_import', 'date', 'req_date', 'note',];
 
     public function user(): BelongsTo
     {

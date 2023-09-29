@@ -52,6 +52,6 @@ class Fpa extends Model
 
     public function fpa_details()
     {
-        return $this->hasMany(RelParameter::class);
+        return $this->hasMany(Fpa_Detail::class);
     }
 }

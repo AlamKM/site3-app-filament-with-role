@@ -13,7 +13,7 @@ class Fpa_Detail extends Model
 
     //protected $table = 'Fpas';
 
-    protected $table = 'Fpa_Details';
+    protected $table = 'fpa_details';
 
     protected $casts = [
         'status_item' => StatusItem::class

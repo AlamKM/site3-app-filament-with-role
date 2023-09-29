@@ -21,8 +21,8 @@ return new class extends Migration
             $table->string('unit')->nullable();
             $table->string('hasil_analisa')->nullable();
             $table->string('qc_analis')->nullable();
+            $table->string('note')->nullable();
             $table->date('tgl_analisa')->nullable();
-            $table->date('tgl_input')->nullable();
             $table->timestamps();
         });
     }

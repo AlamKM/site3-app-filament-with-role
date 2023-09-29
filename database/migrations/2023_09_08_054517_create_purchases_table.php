@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('no_pr')->nullable();
             $table->string('no_po')->nullable();
+            $table->string('local_import')->nullable();
             $table->date('date')->nullable();
             $table->date('req_date')->nullable();
             $table->string('note')->nullable();
