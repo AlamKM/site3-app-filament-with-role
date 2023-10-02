@@ -52,12 +52,6 @@ class ParameterSeeder extends Seeder
             'note' => '',
         ]);
         Parameter::create([
-            'parameter' => '',
-            'unit' => '',
-            'metode' => '',
-            'note' => '',
-        ]);
-        Parameter::create([
             'parameter' => 'Arsenic',
             'unit' => 'ppm',
             'metode' => '',

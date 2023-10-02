@@ -23,6 +23,24 @@ class PurchaseSeeder extends Seeder
             'req_date' => '2023-09-29',
             'note' => '',
         ]);
+        Purchase::create([
+            'user_id' => '1',
+            'no_pr' => '',
+            'no_po' => '',
+            'local_import' => '',
+            'date' => '2023-09-29',
+            'req_date' => '2023-09-29',
+            'note' => '',
+        ]);
+        Purchase::create([
+            'user_id' => '1',
+            'no_pr' => '',
+            'no_po' => '',
+            'local_import' => '',
+            'date' => '2023-09-29',
+            'req_date' => '2023-09-29',
+            'note' => '',
+        ]);
 
 
         PurchaseItem::create([

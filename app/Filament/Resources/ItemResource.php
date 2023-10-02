@@ -47,6 +47,7 @@ class ItemResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('No')->rowIndex(),
                 Tables\Columns\TextColumn::make('item_code')->searchable()->sortable(),
                 Tables\Columns\TextColumn::make('item_name')->searchable()->sortable(),
                 Tables\Columns\TextColumn::make('category')->searchable()->sortable(),
