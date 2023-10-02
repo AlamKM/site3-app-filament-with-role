@@ -227,5 +227,8 @@ class ItemSeeder extends Seeder
         Item::create(['item_code' => 'MS00004', 'item_name' => 'PE Liner 98', 'category' => 'PACKAGING', 'sub_category' => '', 'unit' => 'Kgs', 'note' => '']);
         Item::create(['item_code' => 'MS00006', 'item_name' => 'Tali Plastik Rafia', 'category' => 'PACKAGING', 'sub_category' => '', 'unit' => 'Roll', 'note' => '']);
         Item::create(['item_code' => 'MS00008', 'item_name' => 'Karung Plastik Seaweed (120 x 90 cm)', 'category' => 'PACKAGING', 'sub_category' => '', 'unit' => 'Pcs', 'note' => '']);
+
+        Item::create(['item_code' => 'BA00064', 'item_name' => 'Curdlan FT-N80', 'category' => 'Raw Materials', 'sub_category' => 'BLENDED', 'unit' => 'Kgs', 'note' => '']);
+        Item::create(['item_code' => 'BA00065', 'item_name' => 'Curdlan FT-N90', 'category' => 'Raw Materials', 'sub_category' => 'BLENDED', 'unit' => 'Kgs', 'note' => '']);
     }
 }
