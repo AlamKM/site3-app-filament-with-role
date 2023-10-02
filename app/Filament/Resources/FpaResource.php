@@ -10,6 +10,8 @@ use App\Models\Purchase;
 use Filament\Forms\Form;
 use App\Models\Parameter;
 use Filament\Tables\Table;
+use App\Models\RelParameter;
+use App\Models\ItemParameter;
 use Illuminate\Support\Carbon;
 use Filament\Resources\Resource;
 use Filament\Forms\Components\Card;
@@ -123,7 +125,7 @@ class FpaResource extends Resource
                         Card::make()
                             ->schema([
                                 Repeater::make('fpa_details')
-                                    ->label('Hasil Analisa Dari Tiap Parameter')
+                                    ->label('Analysis Results')
                                     ->relationship()
                                     ->schema([
                                         Select::make('parameter')
@@ -131,17 +133,27 @@ class FpaResource extends Resource
                                             ->label('Parameter')
                                             ->options(Parameter::query()->pluck('parameter', 'id'))
                                             ->searchable()
-                                            ->helperText('Click "Add to item parameter" jika lebih dari satu parameter'),
+                                            ->columnSpan([
+                                                'sm' => 1,
+                                            ]),
+                                        //->helperText('Click "Add to item parameter" jika lebih dari satu parameter'),
+                                        TextInput::make('hasil_analisa'),
                                         TextInput::make('unit'),
                                         TextInput::make('std_parameter')
                                             ->label('Standard'),
-                                        TextInput::make('hasil_analisa'),
-                                        TextInput::make('qc_analis'),
-                                        TextInput::make('note'),
+                                        TextInput::make('note')
+                                            ->columnSpan([
+                                                'sm' => 2,
+                                            ]),
                                         Forms\Components\DatePicker::make('tgl_analisa')
                                             ->default(now())
                                             ->required(),
-                                    ])->columns(5)
+                                        TextInput::make('qc_analis')
+                                            ->default(auth()->user()->name)
+                                            ->visible(auth()->user()->name === 'admin'),
+                                    ])
+                                    ->columns(4)
+                                    ->defaultItems(1)
                             ])
                     ])
             ])->columns([
@@ -162,7 +174,8 @@ class FpaResource extends Resource
                 Tables\Columns\TextColumn::make('no_lot')->searchable()->sortable()->limit(35),
                 Tables\Columns\TextColumn::make('status_item')->badge(),
                 Tables\Columns\TextColumn::make('note')->limit(35),
-                Tables\Columns\TextColumn::make('create_by')->label('Created by'),
+                Tables\Columns\TextColumn::make('fpa_details.qc_analis')->label('Analyst By'),
+                Tables\Columns\TextColumn::make('purchases.name')->label('Created By'),
             ])->defaultSort('created_at', 'desc')
             ->filters([
                 Tables\Filters\Filter::make('created_at')

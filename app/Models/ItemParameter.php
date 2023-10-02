@@ -33,4 +33,9 @@ class ItemParameter extends Model
     {
         return $this->belongsTo(RelParameter::class);
     }
+
+    public function itemparameter()
+    {
+        return $this->hasMany(Parameter::class, 'parameter_id');
+    }
 }
