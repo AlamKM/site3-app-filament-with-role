@@ -6,6 +6,7 @@ use App\Models\Fpa;
 use Filament\Forms;
 use App\Models\Item;
 use Filament\Tables;
+use App\Models\Purchase;
 use Filament\Forms\Form;
 use App\Models\Parameter;
 use Filament\Tables\Table;
@@ -70,6 +71,8 @@ class FpaResource extends Resource
                             ->label('Category')
                             ->relationship('category_item', 'category')
                             ->searchable()
+                            ->disabled(auth()->user()->name === 'admin')
+                            ->required()
                             ->preload()
                             ->createOptionForm([
                                 Forms\Components\TextInput::make('category')
@@ -77,9 +80,15 @@ class FpaResource extends Resource
                                     ->maxLength(255)
                             ]),
                         Select::make('purchase_id')
-                            ->relationship('purchase', 'no_po')
+                            //->relationship('purchase', 'no_po')
                             ->searchable()
-                            ->preload()
+                            ->disabled(auth()->user()->name === 'admin')
+                            ->required()
+                            ->options(function () {
+                                return Purchase::whereNotNull('no_po')
+                                    ->orWhere('no_po', '1')
+                                    ->pluck('no_po', 'id');
+                            })
                             ->live()
                             ->label('NO PO'),
                         Select::make('item_id')
@@ -87,13 +96,17 @@ class FpaResource extends Resource
                                 $query->where('purchase_id', $get('purchase_id'));
                             })->pluck('item_name', 'id'))
                             ->preload()
+                            ->disabled(auth()->user()->name === 'admin')
+                            ->required()
                             ->searchable()
                             ->label('Item Name'),
                         Forms\Components\TextInput::make('no_lot')
                             ->maxLength(255)
                             ->required()
+                            ->disabled(auth()->user()->name === 'admin')
                             ->unique(ignoreRecord: true),
-                        Forms\Components\TextInput::make('note'),
+                        Forms\Components\TextInput::make('note')
+                            ->disabled(auth()->user()->name === 'admin'),
                         Forms\Components\Hidden::make('create_by')
                             ->default(auth()->user()->name),
                         Forms\Components\Hidden::make('status_item')
@@ -109,7 +122,7 @@ class FpaResource extends Resource
                     ->schema([
                         Card::make()
                             ->schema([
-                                Repeater::make('Fpa_Details')
+                                Repeater::make('fpa_details')
                                     ->label('Hasil Analisa Dari Tiap Parameter')
                                     ->relationship()
                                     ->schema([
@@ -155,9 +168,11 @@ class FpaResource extends Resource
                 Tables\Filters\Filter::make('created_at')
                     ->form([
                         Forms\Components\DatePicker::make('created_from')
-                            ->placeholder(fn ($state): string => 'Dec 18, ' . now()->subYear()->format('Y'))->default(now()->startOfMonth()),
+                            ->placeholder(fn ($state): string => 'Dec 18, ' . now()->subYear()->format('Y'))->default(now()->startOfMonth())
+                            ->native(false),
                         Forms\Components\DatePicker::make('created_until')
-                            ->placeholder(fn ($state): string => now()->format('M d, Y'))->default(now()->endOfMonth()),
+                            ->placeholder(fn ($state): string => now()->format('M d, Y'))->default(now()->endOfMonth())
+                            ->native(false),
                     ])
                     ->query(function (Builder $query, array $data): Builder {
                         return $query

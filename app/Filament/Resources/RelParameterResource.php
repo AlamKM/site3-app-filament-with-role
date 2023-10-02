@@ -65,8 +65,13 @@ class RelParameterResource extends Resource
                                                     ->helperText('Click "Add to item parameter" jika lebih dari satu parameter'),
                                                 //->columnSpan(['md' => 5]),
                                                 TextInput::make('std_nilai'),
+                                                TextInput::make('unit')
+                                                    ->default(fn ($get) => Parameter::whereHas('parameters', function ($query) use ($get) {
+                                                        $query->where('parameter_id', $get('parameter_id'));
+                                                    })->pluck('unit', 'id')),
+                                                TextInput::make('parameter'),
                                                 TextInput::make('note'),
-                                            ])->columns(3)
+                                            ])->columns(5)
                                     ])
                             ])
                     ])->columnSpan('full')

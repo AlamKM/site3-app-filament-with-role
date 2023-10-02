@@ -85,9 +85,11 @@ class FpaDetailResource extends Resource
                                 DatePicker::make('tgl_analisa')
                                     ->label('Tanggal Analisa')
                                     ->default(now())
+                                    ->native(false)
                                     ->required(),
                                 DatePicker::make('tgl_input')
                                     ->label('Tanggal Input')
+                                    ->native(false)
                                     ->default(now())
                                     ->required(),
                             ]),
@@ -124,9 +126,11 @@ class FpaDetailResource extends Resource
                 Tables\Filters\Filter::make('created_at')
                     ->form([
                         DatePicker::make('created_from')
-                            ->placeholder(fn ($state): string => 'Dec 18, ' . now()->subYear()->format('Y'))->default(now()->startOfMonth()),
+                            ->placeholder(fn ($state): string => 'Dec 18, ' . now()->subYear()->format('Y'))->default(now()->startOfMonth())
+                            ->native(false),
                         DatePicker::make('created_until')
-                            ->placeholder(fn ($state): string => now()->format('M d, Y'))->default(now()->endOfMonth()),
+                            ->placeholder(fn ($state): string => now()->format('M d, Y'))->default(now()->endOfMonth())
+                            ->native(false),
                     ])
                     ->query(function (Builder $query, array $data): Builder {
                         return $query

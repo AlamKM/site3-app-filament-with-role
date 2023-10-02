@@ -32,6 +32,7 @@ class PurchaseResource extends Resource
                             ->schema([
                                 Forms\Components\DatePicker::make('date')
                                     ->required()
+                                    ->native(false)
                                     ->default(now()),
                                 Forms\Components\TextInput::make('no_pr')
                                     ->required()
@@ -43,6 +44,7 @@ class PurchaseResource extends Resource
                                     ->label('NO PO'),
                                 Forms\Components\DatePicker::make('req_date')
                                     ->default(now())
+                                    ->native(false)
                                     ->required(),
                             ])->columns(['sm' => 2]),
 
@@ -89,9 +91,11 @@ class PurchaseResource extends Resource
                 Tables\Filters\Filter::make('created_at')
                     ->form([
                         Forms\Components\DatePicker::make('created_from')
-                            ->placeholder(fn ($state): string => 'Dec 18, ' . now()->subYear()->format('Y'))->default(now()->startOfMonth()),
+                            ->placeholder(fn ($state): string => 'Dec 18, ' . now()->subYear()->format('Y'))->default(now()->startOfMonth())
+                            ->native(false),
                         Forms\Components\DatePicker::make('created_until')
-                            ->placeholder(fn ($state): string => now()->format('M d, Y'))->default(now()->endOfMonth()),
+                            ->placeholder(fn ($state): string => now()->format('M d, Y'))->default(now()->endOfMonth())
+                            ->native(false),
                     ])
                     ->query(function (Builder $query, array $data): Builder {
                         return $query
