@@ -129,7 +129,7 @@ class RelParameterResource extends Resource
         return [
             'index' => Pages\ListRelParameters::route('/'),
             'create' => Pages\CreateRelParameter::route('/create'),
-            //'edit' => Pages\EditRelParameter::route('/{record}/edit'),
+            'edit' => Pages\EditRelParameter::route('/{record}/edit'),
         ];
     }
 }

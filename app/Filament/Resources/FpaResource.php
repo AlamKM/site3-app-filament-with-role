@@ -6,6 +6,7 @@ use App\Models\Fpa;
 use Filament\Forms;
 use App\Models\Item;
 use Filament\Tables;
+use Filament\Forms\Set;
 use App\Models\Purchase;
 use Filament\Forms\Form;
 use App\Models\Parameter;
@@ -16,8 +17,10 @@ use Illuminate\Support\Carbon;
 use Filament\Resources\Resource;
 use Filament\Forms\Components\Card;
 use Filament\Forms\Components\Select;
+use Filament\Forms\ComponentContainer;
 use Filament\Forms\Components\Repeater;
 use Filament\Tables\Columns\TextColumn;
+use Illuminate\Database\Eloquent\Model;
 use Filament\Forms\Components\TextInput;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Tables\Filters\TrashedFilter;
@@ -73,7 +76,7 @@ class FpaResource extends Resource
                             ->label('Category')
                             ->relationship('category_item', 'category')
                             ->searchable()
-                            ->disabled(auth()->user()->name === 'admin')
+                            //->disabled(auth()->user()->name === 'admin')
                             ->required()
                             ->preload()
                             ->createOptionForm([
@@ -82,9 +85,13 @@ class FpaResource extends Resource
                                     ->maxLength(255)
                             ]),
                         Select::make('purchase_id')
-                            //->relationship('purchase', 'no_po')
                             ->searchable()
-                            ->disabled(auth()->user()->name === 'admin')
+                            ->afterStateUpdated(function (Set $set) {
+                                $set('item_id', null);
+                                $set('no_lot', null);
+                                $set('note', null);
+                            })
+                            //->disabled(auth()->user()->name === 'admin')
                             ->required()
                             ->options(function () {
                                 return Purchase::whereNotNull('no_po')
@@ -98,27 +105,34 @@ class FpaResource extends Resource
                                 $query->where('purchase_id', $get('purchase_id'));
                             })->pluck('item_name', 'id'))
                             ->preload()
-                            ->disabled(auth()->user()->name === 'admin')
+                            ->afterStateUpdated(fn (Set $set) => $set('no_lot', null))
+                            //->disabled(auth()->user()->name === 'admin')
                             ->required()
+                            ->live()
                             ->searchable()
                             ->label('Item Name'),
                         Forms\Components\TextInput::make('no_lot')
                             ->maxLength(255)
                             ->required()
-                            ->disabled(auth()->user()->name === 'admin')
+                            ->live()
+                            ->afterStateUpdated(fn (Set $set) => $set('note', null))
+                            //->disabled(auth()->user()->name === 'admin')
                             ->unique(ignoreRecord: true),
                         Forms\Components\TextInput::make('note')
-                            ->disabled(auth()->user()->name === 'admin'),
+                            ->live(),
+                        //->disabled(auth()->user()->name === 'admin'),
                         Forms\Components\Hidden::make('create_by')
                             ->default(auth()->user()->name),
                         Forms\Components\Hidden::make('status_item')
                             ->default('Waiting'),
                         Forms\Components\Radio::make('status_item')
-                            ->options(self::$statuses)
-                            ->visible(auth()->user()->name === 'admin')
+                            ->options(self::$statuses),
+                        //->visible(auth()->user()->name === 'admin')
                     ]),
+
+
                 Forms\Components\Section::make('Parameter')
-                    ->visible(auth()->user()->name === 'admin')
+                    //->visible(auth()->user()->name === 'admin')
                     ->label('Parameter')
                     ->icon('heroicon-m-beaker')
                     ->schema([
@@ -127,16 +141,22 @@ class FpaResource extends Resource
                                 Repeater::make('fpa_details')
                                     ->label('Analysis Results')
                                     ->relationship()
+                                    ->live()
                                     ->schema([
                                         Select::make('parameter')
-                                            ->default(NULL)
                                             ->label('Parameter')
-                                            ->options(Parameter::query()->pluck('parameter', 'id'))
+                                            ->preload()
+                                            ->options(function ($get) {
+                                                return Parameter::whereHas('itemParameters', function ($query) use ($get) {
+                                                    $query->whereHas('relParameter', function ($subQuery) use ($get) {
+                                                        $subQuery->where('item_id', $get('item_id'));
+                                                    });
+                                                })->pluck('parameter', 'id');
+                                            })
                                             ->searchable()
                                             ->columnSpan([
                                                 'sm' => 1,
                                             ]),
-                                        //->helperText('Click "Add to item parameter" jika lebih dari satu parameter'),
                                         TextInput::make('hasil_analisa'),
                                         TextInput::make('unit'),
                                         TextInput::make('std_parameter')
@@ -175,7 +195,7 @@ class FpaResource extends Resource
                 Tables\Columns\TextColumn::make('status_item')->badge(),
                 Tables\Columns\TextColumn::make('note')->limit(35),
                 Tables\Columns\TextColumn::make('fpa_details.qc_analis')->label('Analyst By'),
-                Tables\Columns\TextColumn::make('purchases.name')->label('Created By'),
+                Tables\Columns\TextColumn::make('fpas.purchases_id.user.name')->label('Created By'),
             ])->defaultSort('created_at', 'desc')
             ->filters([
                 Tables\Filters\Filter::make('created_at')

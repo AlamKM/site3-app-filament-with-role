@@ -34,7 +34,7 @@ class Item extends Model
 
     public function purchaseItems()
     {
-        return $this->hasMany(PurchaseItem::class, 'item_id');
+        return $this->hasMany(PurchaseItem::class);
     }
 
     public function purchases()
@@ -47,13 +47,8 @@ class Item extends Model
         return $this->hasMany(RelParameter::class, 'item_id');
     }
 
-    public function itemparameter()
+    public function itemParameter()
     {
         return $this->hasMany(ItemParameter::class);
-    }
-
-    public function fpadetails()
-    {
-        return $this->hasMany(Fpa::class, 'item_id', 'item_name');
     }
 }

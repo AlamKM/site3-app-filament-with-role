@@ -40,6 +40,7 @@ class PurchaseResource extends Resource
                                     ->label('NO PR'),
                                 Forms\Components\TextInput::make('no_po')
                                     ->required()
+                                    ->default(NULL)
                                     ->unique(ignoreRecord: true)
                                     ->label('NO PO'),
                                 Forms\Components\DatePicker::make('req_date')

@@ -34,8 +34,8 @@ class Parameter extends Model
         return $this->belongsTo(Item::class);
     }
 
-    public function parameteritem()
+    public function itemParameters()
     {
-        return $this->hasMany(Parameter::class, 'parameter_id');
+        return $this->hasMany(ItemParameter::class, 'parameter_id');
     }
 }

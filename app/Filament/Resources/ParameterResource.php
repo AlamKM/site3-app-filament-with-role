@@ -51,8 +51,6 @@ class ParameterResource extends Resource
                 Tables\Columns\TextColumn::make('unit'),
                 Tables\Columns\TextColumn::make('metode'),
                 Tables\Columns\TextColumn::make('note'),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime(),
                 Tables\Columns\TextColumn::make('updated_at')
                     ->dateTime(),
             ])

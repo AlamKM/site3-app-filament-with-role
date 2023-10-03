@@ -29,13 +29,8 @@ class ItemParameter extends Model
         return $this->belongsTo(Parameter::class);
     }
 
-    public function relparameter()
+    public function relParameter()
     {
         return $this->belongsTo(RelParameter::class);
-    }
-
-    public function itemparameter()
-    {
-        return $this->hasMany(Parameter::class, 'parameter_id');
     }
 }
