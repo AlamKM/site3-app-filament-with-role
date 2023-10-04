@@ -138,6 +138,20 @@ class FpaResource extends Resource
                     ->schema([
                         Card::make()
                             ->schema([
+                                Select::make('parameter')
+                                    ->label('Parameter')
+                                    ->preload()
+                                    ->options(function ($get) {
+                                        return Parameter::whereHas('itemParameters', function ($query) use ($get) {
+                                            $query->whereHas('relParameter', function ($subQuery) use ($get) {
+                                                $subQuery->where('item_id', $get('item_id'));
+                                            });
+                                        })->pluck('parameter', 'id');
+                                    })
+                                    ->searchable()
+                                    ->columnSpan([
+                                        'sm' => 1,
+                                    ]),
                                 Repeater::make('fpa_details')
                                     ->label('Analysis Results')
                                     ->relationship()
@@ -158,7 +172,8 @@ class FpaResource extends Resource
                                                 'sm' => 1,
                                             ]),
                                         TextInput::make('hasil_analisa'),
-                                        TextInput::make('unit'),
+                                        TextInput::make('unit')
+                                            ->id('unit'),
                                         TextInput::make('std_parameter')
                                             ->label('Standard'),
                                         TextInput::make('note')
