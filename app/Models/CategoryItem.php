@@ -21,4 +21,9 @@ class CategoryItem extends Model
     {
         return $this->hasMany(Fpa_Detail::class);
     }
+
+    public function Item()
+    {
+        return $this->hasMany(Item::class);
+    }
 }

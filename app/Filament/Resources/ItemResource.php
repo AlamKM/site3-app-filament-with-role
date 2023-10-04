@@ -28,15 +28,39 @@ class ItemResource extends Resource
                     ->columns(2)
                     ->schema([
                         Forms\Components\TextInput::make('item_code')
-                            ->maxLength(255),
+                            ->maxLength(255)
+                            ->required(),
                         Forms\Components\TextInput::make('item_name')
-                            ->maxLength(255),
-                        Forms\Components\TextInput::make('category')
-                            ->maxLength(255),
+                            ->maxLength(255)
+                            ->required(),
+                        Forms\Components\Select::make('category')
+                            ->preload()
+                            ->required()
+                            ->relationship('category_item', 'category')
+                            ->createOptionForm([
+                                Forms\Components\TextInput::make('category')
+                                    ->required()
+                                    ->maxLength(255)
+                            ]),
+                        Forms\Components\Select::make('inv_non_inv')
+                            ->preload()
+                            ->label('Inv/Non-Inv')
+                            ->required()
+                            ->options([
+                                'Inventory' => 'Inventory',
+                                'Non-Inventory' => 'Non-Inventory',
+                            ]),
                         Forms\Components\TextInput::make('sub_category')
                             ->maxLength(255),
-                        Forms\Components\TextInput::make('unit')
-                            ->maxLength(255),
+                        Forms\Components\Select::make('unit')
+                            ->preload()
+                            ->required()
+                            ->options([
+                                'Kgs' => 'Kgs',
+                                'Pcs' => 'Pcs',
+                                'Rolls' => 'Rolls',
+                                'Ltr' => 'Ltr',
+                            ]),
                         Forms\Components\TextInput::make('note')
                             ->maxLength(255),
                     ])
@@ -50,6 +74,11 @@ class ItemResource extends Resource
                 Tables\Columns\TextColumn::make('No')->rowIndex(),
                 Tables\Columns\TextColumn::make('item_code')->searchable()->sortable(),
                 Tables\Columns\TextColumn::make('item_name')->searchable()->sortable(),
+                Tables\Columns\TextColumn::make('inv_non_inv')->searchable()->sortable()->label('Inv/Non-Inv')->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'Inventory' => 'success',
+                        'Non-Inventory' => 'danger',
+                    }),
                 Tables\Columns\TextColumn::make('category')->searchable()->sortable(),
                 Tables\Columns\TextColumn::make('sub_category')->searchable()->sortable(),
                 Tables\Columns\TextColumn::make('unit')->searchable()->sortable()->toggleable(isToggledHiddenByDefault: true),

@@ -51,4 +51,9 @@ class Item extends Model
     {
         return $this->hasMany(ItemParameter::class);
     }
+
+    public function category_item()
+    {
+        return $this->belongsTo(CategoryItem::class, 'category_item_id');
+    }
 }
