@@ -87,7 +87,9 @@ class PurchaseResource extends Resource
                 Tables\Columns\TextColumn::make('purchaseItem.item.item_name')->label('Item Name')->limit(35),
                 Tables\Columns\TextColumn::make('req_date')->date(),
                 Tables\Columns\TextColumn::make('user.name')->label('Created By'),
-            ])->defaultSort('date', 'desc')
+            ])
+            ->defaultSort('date', 'desc')
+            ->paginated([10, 25, 50, 100])
             ->filters([
                 Tables\Filters\Filter::make('created_at')
                     ->form([

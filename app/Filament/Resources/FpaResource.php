@@ -211,7 +211,7 @@ class FpaResource extends Resource
                 Tables\Columns\TextColumn::make('note')->limit(35),
                 Tables\Columns\TextColumn::make('fpa_details.qc_analis')->label('Analyst By'),
                 Tables\Columns\TextColumn::make('fpas.purchases_id.user.name')->label('Created By'),
-            ])->defaultSort('created_at', 'desc')
+            ])->defaultSort('created_at', 'desc')->paginated([10, 25, 50, 100])
             ->filters([
                 Tables\Filters\Filter::make('created_at')
                     ->form([

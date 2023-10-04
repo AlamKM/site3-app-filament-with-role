@@ -82,7 +82,7 @@ class UserResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('updated_at')
                     ->dateTime('d - M - Y'),
-            ])
+            ])->paginated([10, 25, 50, 100])
             ->filters([
                 TrashedFilter::make(),
             ])

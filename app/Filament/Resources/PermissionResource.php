@@ -40,7 +40,7 @@ class PermissionResource extends Resource
                     ->dateTime('d - M - Y')
                     ->sortable(['created_at'])
                     ->searchable(),
-            ])->defaultSort('created_at', 'desc')
+            ])->defaultSort('created_at', 'desc')->paginated([10, 25, 50, 100])
             ->filters([])
             ->actions([
                 Tables\Actions\EditAction::make()->iconButton(),

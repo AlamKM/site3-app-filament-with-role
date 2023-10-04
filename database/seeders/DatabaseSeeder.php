@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
-use App\Models\Purchase;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -21,6 +20,8 @@ class DatabaseSeeder extends Seeder
         $this->call(ParameterSeeder::class);
         $this->call(CategoryItemSeeder::class);
         $this->call(PurchaseSeeder::class);
+        $this->call(RelParameterSeeder::class);
+        $this->call(ItemParameterSeeder::class);
         // \App\Models\User::factory(10)->create();
 
         // \App\Models\User::factory()->create([

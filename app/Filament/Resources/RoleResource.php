@@ -51,7 +51,7 @@ class RoleResource extends Resource
                     ->dateTime('d - M - Y')
                     ->sortable()
                     ->searchable(),
-            ])
+            ])->paginated([10, 25, 50, 100])
             ->filters([
                 //
             ])

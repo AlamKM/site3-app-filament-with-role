@@ -14,7 +14,9 @@ class ItemParameter extends Model
         'item_id',
         'parameter_id',
         'std_nilai',
-        'note'
+        'note',
+        'unit',
+        'metode',
     ];
 
     protected $table = 'item_parameters';

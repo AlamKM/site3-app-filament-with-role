@@ -53,7 +53,7 @@ class ParameterResource extends Resource
                 Tables\Columns\TextColumn::make('note'),
                 Tables\Columns\TextColumn::make('updated_at')
                     ->dateTime(),
-            ])
+            ])->paginated([10, 25, 50, 100])
             ->filters([
                 TrashedFilter::make(),
             ])

@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('fpa_details', function (Blueprint $table) {
             $table->id();
             $table->foreignId('fpa_id')->constrained()->onDelete('cascade');
-            $table->string('parameter')->nullable();
+            $table->foreignId('parameter_id')->constrained()->onDelete('cascade');
             $table->string('std_parameter')->nullable();
             $table->string('unit')->nullable();
             $table->string('hasil_analisa')->nullable();

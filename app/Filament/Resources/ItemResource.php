@@ -60,7 +60,7 @@ class ItemResource extends Resource
                 Tables\Columns\TextColumn::make('updated_at')
                     ->dateTime()
                     ->toggleable(isToggledHiddenByDefault: true),
-            ])
+            ])->paginated([10, 25, 50, 100])
             ->filters([
                 TrashedFilter::make(),
             ])

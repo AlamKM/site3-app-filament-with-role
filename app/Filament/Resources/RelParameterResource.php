@@ -3,6 +3,7 @@
 namespace App\Filament\Resources;
 
 use Filament\Tables;
+use Filament\Forms\Set;
 use Filament\Forms\Form;
 use App\Models\Parameter;
 use Filament\Tables\Table;
@@ -44,7 +45,6 @@ class RelParameterResource extends Resource
                                     ->required()
                                     ->unique(ignoreRecord: true)
                                     ->searchable()
-                                    ->preload()
                                     ->relationship('item', 'item_name'),
                             ]),
                         Section::make('Item Parameter')
@@ -62,12 +62,28 @@ class RelParameterResource extends Resource
                                                     ->options(Parameter::query()->pluck('parameter', 'id'))
                                                     ->required()
                                                     ->searchable()
-                                                    ->helperText('Click "Add to item parameter" jika lebih dari satu parameter'),
-                                                //->columnSpan(['md' => 5]),
-                                                TextInput::make('std_nilai'),
-                                                TextInput::make('note')->columnSpan([
-                                                    'sm' => 2,
-                                                ]),
+                                                    ->afterStateUpdated(function (Set $set) {
+                                                        $set('std_nilai', null);
+                                                        $set('note', null);
+                                                        $set('metode', null);
+                                                        $set('unit', null);
+                                                    }),
+                                                TextInput::make('std_nilai')
+                                                    ->required(),
+                                                Select::make('unit')
+                                                    ->options(fn ($get) => Parameter::whereHas('itemParameters', function ($query) use ($get) {
+                                                        $query->where('parameter_id', $get('parameter_id'));
+                                                    })->pluck('unit', 'id'))
+                                                    ->required()
+                                                    ->native(false),
+                                                TextInput::make('note'),
+                                                Select::make('metode')
+                                                    ->options(fn ($get) => Parameter::whereHas('itemParameters', function ($query) use ($get) {
+                                                        $query->where('parameter_id', $get('parameter_id'));
+                                                    })->pluck('metode', 'id'))
+                                                    ->required()
+                                                    ->columnSpanFull()
+                                                    ->native(false),
                                             ])->columns(4)
                                     ])
                             ])
@@ -99,7 +115,7 @@ class RelParameterResource extends Resource
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-            ])
+            ])->paginated([10, 25, 50, 100])
             ->filters([
                 TrashedFilter::make(),
             ])
