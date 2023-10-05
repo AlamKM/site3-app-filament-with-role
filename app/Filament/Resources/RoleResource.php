@@ -48,7 +48,7 @@ class RoleResource extends Resource
                     ->rowIndex(),
                 TextColumn::make('name')->sortable()->searchable(),
                 TextColumn::make('created_at')
-                    ->dateTime('d - M - Y')
+                    ->dateTime('d-M-y')
                     ->sortable()
                     ->searchable(),
             ])->paginated([10, 25, 50, 100])

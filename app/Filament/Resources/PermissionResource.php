@@ -37,7 +37,7 @@ class PermissionResource extends Resource
                     ->rowIndex(),
                 TextColumn::make('name')->sortable()->searchable(),
                 TextColumn::make('created_at')
-                    ->dateTime('d - M - Y')
+                    ->dateTime('d-M-y')
                     ->sortable(['created_at'])
                     ->searchable(),
             ])->defaultSort('created_at', 'desc')->paginated([10, 25, 50, 100])

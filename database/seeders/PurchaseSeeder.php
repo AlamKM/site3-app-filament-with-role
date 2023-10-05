@@ -106,15 +106,6 @@ class PurchaseSeeder extends Seeder
         ]);
         Purchase::create([
             'user_id' => '1',
-            'no_pr' => '0523080001',
-            'no_po' => '',
-            'local_import' => 'Import',
-            'date' => '2023-08-30',
-            'req_date' => '2023-11-30',
-            'note' => 'Trial Sales',
-        ]);
-        Purchase::create([
-            'user_id' => '1',
             'no_pr' => '0523090001',
             'no_po' => 'DD23090001',
             'local_import' => 'Local',
@@ -126,79 +117,68 @@ class PurchaseSeeder extends Seeder
 
         PurchaseItem::create([
             'purchase_id' => '1',
-            'item_id' => '113',
+            'item_id' => '123',
             'quantity' => '5000',
             'notes' => '',
         ]);
         PurchaseItem::create([
             'purchase_id' => '2',
-            'item_id' => '112',
+            'item_id' => '122',
             'quantity' => '5000',
             'notes' => '',
         ]);
         PurchaseItem::create([
             'purchase_id' => '3',
-            'item_id' => '101',
+            'item_id' => '111',
             'quantity' => '1300',
             'notes' => '',
         ]);
         PurchaseItem::create([
             'purchase_id' => '4',
-            'item_id' => '112',
+            'item_id' => '122',
             'quantity' => '30000',
             'notes' => '',
         ]);
         PurchaseItem::create([
             'purchase_id' => '5',
-            'item_id' => '98',
+            'item_id' => '108',
             'quantity' => '500',
             'notes' => '',
         ]);
         PurchaseItem::create([
             'purchase_id' => '6',
-            'item_id' => '151',
+            'item_id' => '161',
             'quantity' => '50',
             'notes' => '',
         ]);
         PurchaseItem::create([
             'purchase_id' => '7',
-            'item_id' => '113',
+            'item_id' => '123',
             'quantity' => '5000',
             'notes' => '',
         ]);
         PurchaseItem::create([
             'purchase_id' => '8',
-            'item_id' => '99',
+            'item_id' => '109',
             'quantity' => '10000',
             'notes' => '',
         ]);
         PurchaseItem::create([
             'purchase_id' => '9',
-            'item_id' => '94',
+            'item_id' => '104',
             'quantity' => '2000',
             'notes' => '',
         ]);
         PurchaseItem::create([
             'purchase_id' => '10',
-            'item_id' => '130',
+            'item_id' => '140',
             'quantity' => '40',
             'notes' => '',
         ]);
+
         PurchaseItem::create([
             'purchase_id' => '11',
-            'item_id' => '208',
-            'quantity' => '5',
-            'notes' => '',
-        ]);
-        PurchaseItem::create([
-            'purchase_id' => '11',
-            'item_id' => '207',
-            'quantity' => '5',
-            'notes' => '',
-        ]);
-        PurchaseItem::create([
-            'purchase_id' => '12',
-            'item_id' => '112',
+            'item_id' => '122',
             'quantity' => '10000',
             'notes' => '',
         ]);

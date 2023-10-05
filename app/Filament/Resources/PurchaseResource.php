@@ -81,11 +81,18 @@ class PurchaseResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('index')->rowIndex()->label('No'),
-                Tables\Columns\TextColumn::make('date')->date()->sortable(),
-                Tables\Columns\TextColumn::make('no_pr')->label('NO PR'),
-                Tables\Columns\TextColumn::make('no_po')->label('NO PO'),
-                Tables\Columns\TextColumn::make('purchaseItem.item.item_name')->label('Item Name')->limit(35),
-                Tables\Columns\TextColumn::make('req_date')->date(),
+                Tables\Columns\TextColumn::make('date')->date('d-M-y')->sortable(),
+                Tables\Columns\TextColumn::make('no_pr')->label('NO PR')->searchable(isIndividual: true),
+                Tables\Columns\TextColumn::make('no_po')->label('NO PO')->searchable(isIndividual: true),
+                Tables\Columns\TextColumn::make('purchaseItem.item.item_name')->label('Item Name')->limit(35)->searchable(isIndividual: true),
+                Tables\Columns\TextColumn::make('local_import')->label('Local/Import')
+                    ->badge()
+                    ->searchable(isIndividual: true)
+                    ->color(fn (string $state): string => match ($state) {
+                        'Local' => 'info',
+                        'Import' => 'warning',
+                    }),
+                Tables\Columns\TextColumn::make('req_date')->date('d-M-y'),
                 Tables\Columns\TextColumn::make('user.name')->label('Created By'),
             ])
             ->defaultSort('date', 'desc')

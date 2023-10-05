@@ -108,11 +108,11 @@ class RelParameterResource extends Resource
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
+                    ->dateTime('d-M-y')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
+                    ->dateTime('d-M-y')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])->paginated([10, 25, 50, 100])

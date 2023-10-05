@@ -203,7 +203,7 @@ class FpaResource extends Resource
             ->columns([
                 TextColumn::make('No')
                     ->rowIndex(),
-                Tables\Columns\TextColumn::make('created_at')->label('Date')->dateTime('d - M - Y'),
+                Tables\Columns\TextColumn::make('created_at')->label('Date')->dateTime('d-M-y'),
                 Tables\Columns\TextColumn::make('no_fpa')->searchable()->sortable(),
                 Tables\Columns\TextColumn::make('item.item_name')->searchable()->sortable(),
                 Tables\Columns\TextColumn::make('no_lot')->searchable()->sortable()->limit(35),

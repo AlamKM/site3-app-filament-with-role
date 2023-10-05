@@ -73,15 +73,15 @@ class UserResource extends Resource
                     ->sortable()
                     ->searchable(),
                 TextColumn::make('deleted_at')
-                    ->dateTime('d - M - Y')
+                    ->dateTime('d-M-y')
                     ->sortable()
                     ->searchable(),
                 TextColumn::make('created_at')
-                    ->dateTime('d - M - Y')
+                    ->dateTime('d-M-y')
                     ->sortable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime('d - M - Y'),
+                    ->dateTime('d-M-y'),
             ])->paginated([10, 25, 50, 100])
             ->filters([
                 TrashedFilter::make(),

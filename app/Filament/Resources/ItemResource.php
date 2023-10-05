@@ -86,10 +86,10 @@ class ItemResource extends Resource
                 Tables\Columns\TextColumn::make('unit')->searchable()->sortable()->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('note'),
                 Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
+                    ->dateTime('d-M-y')
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
+                    ->dateTime('d-M-y')
                     ->toggleable(isToggledHiddenByDefault: true),
             ])->paginated([10, 25, 50, 100])
             ->filters([
