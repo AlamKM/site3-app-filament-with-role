@@ -23,10 +23,10 @@ class ListItems extends ListRecords
         return [
             'Inv' => ListRecords\Tab::make()->query(fn ($query) => $query->where('inv_non_inv', 'Inventory'))->label('Inv')->icon('heroicon-m-check')->badge(DB::table('items')->where('inv_non_inv', 'Inventory')->count()),
             'Non_Inv' => ListRecords\Tab::make()->query(fn ($query) => $query->where('inv_non_inv', 'Non-Inventory'))->label('Non-Inv')->icon('heroicon-m-x-mark')->badge(DB::table('Items')->where('inv_non_inv', 'Non-Inventory')->count()),
-            'Finished Goods' => ListRecords\Tab::make()->query(fn ($query) => $query->where('category', 'Finished Goods'))->label('Finished Goods')->icon('heroicon-m-wallet')->badge(DB::table('items')->where('category', 'Finished Goods')->count()),
-            'Raw Materials' => ListRecords\Tab::make()->query(fn ($query) => $query->where('category', 'Raw Materials'))->label('Raw Materials')->icon('heroicon-m-wallet')->badge(DB::table('items')->where('category', 'Raw Materials')->count()),
-            'Packaging' => ListRecords\Tab::make()->query(fn ($query) => $query->where('category', 'Packaging'))->label('Packaging')->icon('heroicon-m-cube')->badge(DB::table('items')->where('category', 'Packaging')->count()),
-            'Others' => ListRecords\Tab::make()->query(fn ($query) => $query->where('category', 'Others'))->label('Others')->icon('heroicon-m-exclamation-circle')->badge(DB::table('items')->where('category', 'Others')->count()),
+            'Finished Goods' => ListRecords\Tab::make()->query(fn ($query) => $query->where('category_id', '3'))->label('FG')->icon('heroicon-m-wallet')->badge(DB::table('items')->where('category_id', '3')->count()),
+            'Raw Material' => ListRecords\Tab::make()->query(fn ($query) => $query->where('category_id', '2'))->label('RM')->icon('heroicon-m-wallet')->badge(DB::table('items')->where('category_id', '2')->count()),
+            'Packaging Material' => ListRecords\Tab::make()->query(fn ($query) => $query->where('category_id', '1'))->label('PM')->icon('heroicon-m-cube')->badge(DB::table('items')->where('category_id', '1')->count()),
+            'Others' => ListRecords\Tab::make()->query(fn ($query) => $query->where('category_id', '4'))->label('Others')->icon('heroicon-m-exclamation-circle')->badge(DB::table('items')->where('category_id', '4')->count()),
             'Hold' => ListRecords\Tab::make()->query(fn ($query) => $query->where('sub_category', 'Hold'))->label('Hold')->icon('heroicon-m-x-circle')->badge(DB::table('items')->where('sub_category', 'Hold')->count()),
         ];
     }

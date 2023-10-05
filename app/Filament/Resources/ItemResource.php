@@ -33,12 +33,12 @@ class ItemResource extends Resource
                         Forms\Components\TextInput::make('item_name')
                             ->maxLength(255)
                             ->required(),
-                        Forms\Components\Select::make('category')
+                        Forms\Components\Select::make('category_id')
                             ->preload()
                             ->required()
                             ->relationship('category_item', 'category')
                             ->createOptionForm([
-                                Forms\Components\TextInput::make('category')
+                                Forms\Components\TextInput::make('category_id')
                                     ->required()
                                     ->maxLength(255)
                             ]),
@@ -51,7 +51,9 @@ class ItemResource extends Resource
                                 'Non-Inventory' => 'Non-Inventory',
                             ]),
                         Forms\Components\TextInput::make('sub_category')
-                            ->maxLength(255),
+                            ->maxLength(255)
+                            ->required()
+                            ->helperText('Masukkan "-" jika dikosongkan'),
                         Forms\Components\Select::make('unit')
                             ->preload()
                             ->required()
@@ -79,7 +81,7 @@ class ItemResource extends Resource
                         'Inventory' => 'success',
                         'Non-Inventory' => 'danger',
                     }),
-                Tables\Columns\TextColumn::make('category')->searchable()->sortable(),
+                Tables\Columns\TextColumn::make('category_item.category')->searchable()->sortable()->label('Category'),
                 Tables\Columns\TextColumn::make('sub_category')->searchable()->sortable(),
                 Tables\Columns\TextColumn::make('unit')->searchable()->sortable()->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('note'),

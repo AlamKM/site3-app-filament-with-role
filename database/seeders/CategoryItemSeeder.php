@@ -24,5 +24,9 @@ class CategoryItemSeeder extends Seeder
         CategoryItem::create([
             'category' => 'Finished Goods',
         ]);
+
+        CategoryItem::create([
+            'category' => 'Others',
+        ]);
     }
 }

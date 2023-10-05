@@ -14,10 +14,11 @@ class Item extends Model
     protected $fillable = [
         'item_code',
         'item_name',
-        'category',
+        'category_id',
         'sub_category',
         'unit',
         'note',
+        'inv_non_inv'
     ];
 
     protected $table = 'items';
@@ -54,6 +55,6 @@ class Item extends Model
 
     public function category_item()
     {
-        return $this->belongsTo(CategoryItem::class, 'category_item_id');
+        return $this->belongsTo(CategoryItem::class, 'category_id');
     }
 }

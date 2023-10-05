@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('item_code')->unique()->nullable();
             $table->string('item_name')->unique()->nullable();
             $table->string('inv_non_inv')->nullable();
-            $table->string('category')->nullable();
+            $table->unsignedInteger('category_id')->nullable();
             $table->string('sub_category')->nullable();
             $table->string('unit')->nullable();
             $table->string('note')->nullable();
