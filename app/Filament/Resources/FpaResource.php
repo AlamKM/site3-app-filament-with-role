@@ -235,6 +235,11 @@ class FpaResource extends Resource
             ->actions([
                 Tables\Actions\EditAction::make()->iconButton(),
                 Tables\Actions\DeleteAction::make()->iconButton(),
+                Tables\Actions\Action::make('Download Pdf')
+                    ->icon('heroicon-o-document-arrow-down')
+                    ->iconButton()
+                    ->url('https://www.google.com')
+                    ->openUrlInNewTab(),
             ]);
         // ->bulkActions([
         //     Tables\Actions\DeleteBulkAction::make(),

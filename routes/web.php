@@ -17,3 +17,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return redirect('http://127.0.0.1:8096/admin/login');
 });
+
+Route::get('/download/print', function () {
+    return view('print.printfpa');
+});
