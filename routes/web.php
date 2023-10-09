@@ -19,5 +19,4 @@ Route::get('/', function () {
     return redirect('http://127.0.0.1:8096/admin/login');
 });
 
-Route::get('/{record}/invoice/download', [DownloadPdfController::class, 'download'])->name('invoice.pdf.download');
-Route::get('/{record}/pdf/downloadfpa', [DownloadPdfController::class, 'downloadfpa'])->name('fpa.pdf.download');
+Route::get('/{record}/pdf/downloadfpa', [DownloadPdfController::class, 'downloadpdf'])->name('fpa.pdf.download');

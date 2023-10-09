@@ -1659,8 +1659,9 @@
             </tr>
             <tr class="row5">
                 <td class="column0 style10 null"></td>
-                <td class="column1 style14 s style14" colspan="4">Sample (SK/RM/PM/IM/FG/PB/AV) :</td>
-                <td class="column5 style15 null" colspan="2">Indogel SGP-236G</td>
+                <td class="column1 style14 s style14" colspan="3">Sample (SK/RM/PM/IM/FG/PB/AV) : </td>
+                <td class="column5 style17 null" colspan="2">{{ $item_name }}</td>
+                <td class="column6 style12 null"></td>
                 <td class="column7 style12 null"></td>
                 <td class="column8">&nbsp;</td>
                 <td class="column9">&nbsp;</td>
@@ -1669,7 +1670,7 @@
                 <td class="column0 style10 null"></td>
                 <td class="column1 style14 s style14" colspan="2">Dept./ Bagian</td>
                 <td class="column3 style16 s">:</td>
-                <td class="column4 style17 null">Warehouse</td>
+                <td class="column4 style17 null">{{ $departement }}</td>
                 <td class="column5 style18 null"></td>
                 <td class="column6 style18 null"></td>
                 <td class="column7 style12 null"></td>
@@ -1680,7 +1681,7 @@
                 <td class="column0 style10 null"></td>
                 <td class="column1 style14 s style14" colspan="2">Lokasi Sampling</td>
                 <td class="column3 style16 s">:</td>
-                <td class="column4 style17 null">Warehouse</td>
+                <td class="column4 style17 null">{{ $lokasi }}</td>
                 <td class="column5 style18 null"></td>
                 <td class="column6 style18 null"></td>
                 <td class="column7 style12 null"></td>
@@ -1691,9 +1692,9 @@
                 <td class="column0 style10 null"></td>
                 <td class="column1 style14 s style14" colspan="2">Tgl. Sampling</td>
                 <td class="column3 style16 s">:</td>
-                <td class="column4 style19 null">6-Oct-23</td>
+                <td class="column4 style19 null"><?= date('d-M-y') ?></td>
                 <td class="column5 style20 s">Jam : </td>
-                <td class="column6 style18 null">08:45</td>
+                <td class="column6 style18 null"><?= date('H:i T') ?></td>
                 <td class="column7 style12 null"></td>
                 <td class="column8">&nbsp;</td>
                 <td class="column9">&nbsp;</td>
