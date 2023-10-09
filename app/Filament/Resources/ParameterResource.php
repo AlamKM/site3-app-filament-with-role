@@ -53,7 +53,7 @@ class ParameterResource extends Resource
                 TextColumn::make('No')->rowIndex(),
                 Tables\Columns\TextColumn::make('parameter'),
                 Tables\Columns\TextColumn::make('unit'),
-                Tables\Columns\TextColumn::make('metode'),
+                Tables\Columns\TextColumn::make('metode')->wrap(),
                 Tables\Columns\TextColumn::make('note'),
                 Tables\Columns\TextColumn::make('updated_at')
                     ->dateTime('d-M-y'),

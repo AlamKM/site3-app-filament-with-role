@@ -2,6 +2,7 @@
 
 use App\Filament\Pages\Login;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DownloadPdfController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,6 +19,5 @@ Route::get('/', function () {
     return redirect('http://127.0.0.1:8096/admin/login');
 });
 
-Route::get('/download/print', function () {
-    return view('print.printfpa');
-});
+Route::get('/{record}/invoice/download', [DownloadPdfController::class, 'download'])->name('invoice.pdf.download');
+Route::get('/{record}/pdf/downloadfpa', [DownloadPdfController::class, 'downloadfpa'])->name('fpa.pdf.download');

@@ -106,18 +106,18 @@ class RelParameterResource extends Resource
                 Tables\Columns\TextColumn::make('index')->rowIndex()->label('No'),
                 Tables\Columns\TextColumn::make('Item.item_code')
                     ->label('Item Code')
-                    ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('Item.item_name')
                     ->label('Item Name')
-                    ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('ItemParameter.parameter.parameter')->limit(35)
-                    ->numeric()
+                Tables\Columns\TextColumn::make('ItemParameter.parameter.parameter')
+                    ->wrap()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('ItemParameter.parameter.unit')->limit(35)
-                    ->label('Unit')
-                    ->numeric(),
+                Tables\Columns\TextColumn::make('ItemParameter.parameter.unit')
+                    ->label('Unit'),
+                Tables\Columns\TextColumn::make('ItemParameter.parameter.metode')
+                    ->wrap()
+                    ->label('Metode'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime('d-M-y')
                     ->sortable()

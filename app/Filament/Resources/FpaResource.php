@@ -5,22 +5,19 @@ namespace App\Filament\Resources;
 use App\Models\Fpa;
 use Filament\Forms;
 use App\Models\Item;
+use App\Models\User;
 use Filament\Tables;
 use Filament\Forms\Set;
 use App\Models\Purchase;
 use Filament\Forms\Form;
 use App\Models\Parameter;
 use Filament\Tables\Table;
-use App\Models\RelParameter;
-use App\Models\ItemParameter;
 use Illuminate\Support\Carbon;
 use Filament\Resources\Resource;
 use Filament\Forms\Components\Card;
 use Filament\Forms\Components\Select;
-use Filament\Forms\ComponentContainer;
 use Filament\Forms\Components\Repeater;
 use Filament\Tables\Columns\TextColumn;
-use Illuminate\Database\Eloquent\Model;
 use Filament\Forms\Components\TextInput;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Tables\Filters\TrashedFilter;
@@ -72,6 +69,22 @@ class FpaResource extends Resource
                                 return 'FPA-' . str_pad($nextNumber, 5, '0', STR_PAD_LEFT); // Pad with leading zeros if necessary
                             })
                             ->unique(ignoreRecord: true),
+                        Select::make('departement')
+                            ->label('Departement/Bagian')
+                            ->required()
+                            ->native(false)
+                            ->options((function () {
+                                $departement = auth()->user()->departement;
+                                return User::where('departement', $departement)->pluck('departement', 'departement');
+                            })),
+                        Select::make('lokasi')
+                            ->label('Lokasi Sampling')
+                            ->required()
+                            ->native(false)
+                            ->options((function () {
+                                $departement = auth()->user()->departement;
+                                return User::where('departement', $departement)->pluck('departement', 'departement');
+                            })),
                         Select::make('category_item_id')
                             ->label('Category')
                             ->relationship('category_item', 'category')
@@ -113,6 +126,7 @@ class FpaResource extends Resource
                             ->label('Item Name'),
                         Forms\Components\TextInput::make('no_lot')
                             ->maxLength(255)
+                            ->label('No LOT')
                             ->required()
                             ->live()
                             ->afterStateUpdated(fn (Set $set) => $set('note', null))
@@ -249,9 +263,9 @@ class FpaResource extends Resource
                 Tables\Actions\EditAction::make()->iconButton(),
                 Tables\Actions\DeleteAction::make()->iconButton(),
                 Tables\Actions\Action::make('Download Pdf')
-                    ->icon('heroicon-o-document-arrow-down')
+                    ->icon('heroicon-o-printer')
                     ->iconButton()
-                    ->url('https://www.google.com')
+                    ->url(fn (Fpa $record): string => route('fpa.pdf.download', ['record' => $record]))
                     ->openUrlInNewTab(),
             ]);
         // ->bulkActions([
