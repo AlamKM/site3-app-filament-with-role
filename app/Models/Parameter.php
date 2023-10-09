@@ -38,4 +38,9 @@ class Parameter extends Model
     {
         return $this->hasMany(ItemParameter::class, 'parameter_id');
     }
+
+    public function unitparameter()
+    {
+        return $this->hasMany(Parameter::class);
+    }
 }

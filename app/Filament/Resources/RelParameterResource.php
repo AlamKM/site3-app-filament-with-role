@@ -71,16 +71,24 @@ class RelParameterResource extends Resource
                                                 TextInput::make('std_nilai')
                                                     ->required(),
                                                 Select::make('unit')
-                                                    ->options(fn ($get) => Parameter::whereHas('itemParameters', function ($query) use ($get) {
-                                                        $query->where('parameter_id', $get('parameter_id'));
-                                                    })->pluck('unit', 'id'))
+                                                    // ->options(fn ($get) => Parameter::whereHas('itemParameters', function ($query) use ($get) {
+                                                    //     $query->where('parameter_id', $get('parameter_id'));
+                                                    // })->pluck('unit', 'id'))
+                                                    ->options(function ($get) {
+                                                        $parameter_id = $get('parameter_id');
+                                                        return Parameter::where('id', $parameter_id)->pluck('unit', 'unit');
+                                                    })
                                                     ->required()
                                                     ->native(false),
                                                 TextInput::make('note'),
                                                 Select::make('metode')
-                                                    ->options(fn ($get) => Parameter::whereHas('itemParameters', function ($query) use ($get) {
-                                                        $query->where('parameter_id', $get('parameter_id'));
-                                                    })->pluck('metode', 'id'))
+                                                    // ->options(fn ($get) => Parameter::whereHas('itemParameters', function ($query) use ($get) {
+                                                    //     $query->where('parameter_id', $get('parameter_id'));
+                                                    // })->pluck('metode', 'id'))
+                                                    ->options(function ($get) {
+                                                        $parameter_id = $get('parameter_id');
+                                                        return Parameter::where('id', $parameter_id)->pluck('metode', 'metode');
+                                                    })
                                                     ->required()
                                                     ->columnSpanFull()
                                                     ->native(false),
@@ -107,6 +115,9 @@ class RelParameterResource extends Resource
                 Tables\Columns\TextColumn::make('ItemParameter.parameter.parameter')->limit(35)
                     ->numeric()
                     ->sortable(),
+                Tables\Columns\TextColumn::make('ItemParameter.parameter.unit')->limit(35)
+                    ->label('Unit')
+                    ->numeric(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime('d-M-y')
                     ->sortable()

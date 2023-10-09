@@ -145,6 +145,7 @@ class FpaResource extends Resource
                                         Select::make('parameter_id')
                                             ->label('Parameter')
                                             ->preload()
+                                            ->required(auth()->user()->name === 'admin')
                                             ->options(function ($get) {
                                                 return Parameter::whereHas('itemParameters', function ($query) use ($get) {
                                                     $query->whereHas('relParameter', function ($subQuery) use ($get) {
@@ -156,21 +157,33 @@ class FpaResource extends Resource
                                             ->columnSpan([
                                                 'sm' => 1,
                                             ]),
-                                        TextInput::make('hasil_analisa'),
-                                        TextInput::make('unit')
-                                            ->id('unit'),
-                                        TextInput::make('std_parameter')
-                                            ->label('Standard'),
+                                        TextInput::make('hasil_analisa')
+                                            ->required(auth()->user()->name === 'admin')
+                                            ->label('Hasil Analisa'),
+                                        Select::make('unit')
+                                            ->options((function ($get) {
+                                                $parameter_id = $get('parameter_id');
+                                                return Parameter::where('id', $parameter_id)->pluck('unit', 'unit');
+                                            }))
+                                            ->required(auth()->user()->name === 'admin')
+                                            ->label('Unit'),
+                                        Select::make('std_parameter')
+                                            ->options((function ($get) {
+                                                $parameter_id = $get('parameter_id');
+                                                return Parameter::where('id', $parameter_id)->pluck('metode', 'metode');
+                                            }))
+                                            ->required(auth()->user()->name === 'admin')
+                                            ->label('Standard Parameter'),
                                         TextInput::make('note')
                                             ->columnSpan([
                                                 'sm' => 2,
                                             ]),
                                         Forms\Components\DatePicker::make('tgl_analisa')
+                                            ->label('Tanggal Analisa')
                                             ->default(now())
-                                            ->required(),
-                                        TextInput::make('qc_analis')
-                                            ->default(auth()->user()->name)
-                                            ->visible(auth()->user()->name === 'admin'),
+                                            ->required(auth()->user()->name === 'admin'),
+                                        Forms\Components\Hidden::make('qc_analis')
+                                            ->default(auth()->user()->name),
                                     ])
                                     ->columns(4)
                                     ->defaultItems(1)
@@ -194,8 +207,8 @@ class FpaResource extends Resource
                 Tables\Columns\TextColumn::make('no_lot')->searchable()->sortable()->limit(35),
                 Tables\Columns\TextColumn::make('status_item')->badge(),
                 Tables\Columns\TextColumn::make('note')->limit(35),
-                Tables\Columns\TextColumn::make('fpa_details.qc_analis')->label('Analyst By'),
-                Tables\Columns\TextColumn::make('fpas.purchases_id.user.name')->label('Created By'),
+                //Tables\Columns\TextColumn::make('fpa_details.qc_analis')->label('Analyst By'),
+                //Tables\Columns\TextColumn::make('fpas.purchases_id.user.name')->label('Created By'),
             ])->defaultSort('created_at', 'desc')->paginated([10, 25, 50, 100])
             ->filters([
                 Tables\Filters\Filter::make('created_at')

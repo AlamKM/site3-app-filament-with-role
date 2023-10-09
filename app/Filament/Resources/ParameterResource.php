@@ -32,10 +32,14 @@ class ParameterResource extends Resource
                             ->required(),
                         Forms\Components\TextInput::make('unit')
                             ->maxLength(255)
-                            ->required(),
+                            ->required()
+                            ->default('-')
+                            ->helperText('Isikan "-" jika kolom kosong'),
                         Forms\Components\TextInput::make('metode')
                             ->maxLength(255)
-                            ->required(),
+                            ->required()
+                            ->default('-')
+                            ->helperText('Isikan "-" jika kolom kosong'),
                         Forms\Components\TextInput::make('note')
                             ->maxLength(255)
                     ])->columns(2)
