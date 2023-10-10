@@ -1692,9 +1692,9 @@
                 <td class="column0 style10 null"></td>
                 <td class="column1 style14 s style14" colspan="2">Tgl. Sampling</td>
                 <td class="column3 style16 s">:</td>
-                <td class="column4 style19 null"><?= date('d-M-y') ?></td>
+                <td class="column4 style19 null">{{ date('d-M-y', strtotime($created_at)) }}</td>
                 <td class="column5 style20 s">Jam : </td>
-                <td class="column6 style18 null"><?= date('H:i T') ?></td>
+                <td class="column6 style18 null">{{ date('H:i', strtotime($created_at)) }}</td>
                 <td class="column7 style12 null"></td>
                 <td class="column8">&nbsp;</td>
                 <td class="column9">&nbsp;</td>
@@ -1702,7 +1702,7 @@
             <tr class="row9">
                 <td class="column0 style10 null"></td>
                 <td class="column1 style14 s style14" colspan="4">Kuantitas Total &amp; Isi Perkemasan : </td>
-                <td class="column5 style18 null" colspan="2">20 bag x 25 Kg</td>
+                <td class="column5 style18 null" colspan="2"></td>
                 <td class="column7 style12 null"></td>
                 <td class="column8">&nbsp;</td>
                 <td class="column9">&nbsp;</td>
@@ -1722,7 +1722,7 @@
                 <td class="column0 style10 null"></td>
                 <td class="column1 style21 s style21" colspan="2">Batch / Lot </td>
                 <td class="column3 style16 s">:</td>
-                <td class="column4 style22 null">906P-01</td>
+                <td class="column4 style22 null">{{ '#' . $no_lot }}</td>
                 <td class="column5 style23 null"></td>
                 <td class="column6 style23 null"></td>
                 <td class="column7 style12 null"></td>

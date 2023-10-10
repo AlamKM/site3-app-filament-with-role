@@ -16,8 +16,10 @@ class DownloadPdfController extends Controller
         $item_name = $record->item->item_name;
         $departement = $record->departement;
         $lokasi = $record->lokasi;
+        $created_at = $record->created_at;
+        $no_lot = $record->no_lot;
 
-        $pdf = Pdf::loadView('print.printfpa', compact('item_name', 'departement', 'lokasi'));
+        $pdf = Pdf::loadView('print.printfpa', compact('item_name', 'departement', 'lokasi', 'created_at', 'no_lot'));
         return $pdf->stream();
     }
 }
