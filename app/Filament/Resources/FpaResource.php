@@ -7,11 +7,13 @@ use Filament\Forms;
 use App\Models\Item;
 use App\Models\User;
 use Filament\Tables;
+use Filament\Forms\Get;
 use Filament\Forms\Set;
 use App\Models\Purchase;
 use Filament\Forms\Form;
 use App\Models\Parameter;
 use Filament\Tables\Table;
+use App\Models\ItemParameter;
 use Illuminate\Support\Carbon;
 use Filament\Resources\Resource;
 use Filament\Forms\Components\Card;
@@ -167,13 +169,28 @@ class FpaResource extends Resource
                                                     });
                                                 })->pluck('parameter', 'id');
                                             })
+                                            ->disableOptionwhen(function ($value, $state, Get $get) {
+                                                return collect($get('../*.parameter_id'))
+                                                    ->reject(fn ($id) => $id == $state)
+                                                    ->filter()
+                                                    ->contains($value);
+                                            })
                                             ->searchable()
+                                            ->native(false)
+                                            ->live()
                                             ->columnSpan([
                                                 'sm' => 1,
                                             ]),
                                         TextInput::make('hasil_analisa')
                                             ->required(auth()->user()->name === 'admin')
                                             ->label('Hasil Analisa'),
+                                        Select::make('std_parameter')
+                                            ->options((function ($get) {
+                                                $parameter_id = $get('parameter_id');
+                                                return ItemParameter::where('id', $parameter_id)->pluck('std_nilai', 'std_nilai');
+                                            }))
+                                            ->required(auth()->user()->name === 'admin')
+                                            ->label('Standard Parameter'),
                                         Select::make('unit')
                                             ->options((function ($get) {
                                                 $parameter_id = $get('parameter_id');
@@ -181,13 +198,6 @@ class FpaResource extends Resource
                                             }))
                                             ->required(auth()->user()->name === 'admin')
                                             ->label('Unit'),
-                                        Select::make('std_parameter')
-                                            ->options((function ($get) {
-                                                $parameter_id = $get('parameter_id');
-                                                return Parameter::where('id', $parameter_id)->pluck('metode', 'metode');
-                                            }))
-                                            ->required(auth()->user()->name === 'admin')
-                                            ->label('Standard Parameter'),
                                         TextInput::make('note')
                                             ->columnSpan([
                                                 'sm' => 2,

@@ -11,12 +11,13 @@ use Filament\Resources\Resource;
 use Filament\Resources\Pages\Page;
 use Illuminate\Support\Facades\Hash;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\TrashedFilter;
+use Phpsa\FilamentPasswordReveal\Password;
 use Filament\Forms\Components\CheckboxList;
 use App\Filament\Resources\UserResource\Pages;
 use App\Filament\Resources\UserResource\Pages\EditUser;
 use App\Filament\Resources\UserResource\Pages\CreateUser;
 use App\Filament\Resources\UserResource\RelationManagers\RolesRelationManager;
-use Filament\Tables\Filters\TrashedFilter;
 
 class UserResource extends Resource
 {
@@ -32,26 +33,61 @@ class UserResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\Toggle::make('is_admin')
-                    ->required(),
-                Forms\Components\TextInput::make('email')
-                    ->email()
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('password')
-                    ->password()
-                    ->dehydrateStateUsing(static fn (null|string $state): null|string => filled($state) ? Hash::make($state) : null,)
-                    ->required(static fn (Page $livewire): string => $livewire instanceof CreateUser,)
-                    ->dehydrated(static fn (null|string $state): bool => filled($state))
-                    ->label(static fn (Page $livewire): string => ($livewire instanceof EditUser) ? 'New Password' : 'Password'),
-                CheckboxList::make('roles')
-                    ->relationship('roles', 'name')
-                    ->columns(2)
-                    ->helperText('Only Choose One!')
-                    ->required()
+                Forms\Components\Section::make()
+                    ->schema([
+                        Forms\Components\TextInput::make('name')
+                            ->required()
+                            ->unique(ignoreRecord: true)
+                            ->maxLength(255)
+                            ->label('Input Name')
+                            ->autofocus(),
+                        Forms\Components\TextInput::make('nik')
+                            ->required()
+                            ->unique(ignoreRecord: true)
+                            ->maxLength(8)
+                            ->label('NIK'),
+                        Forms\Components\Select::make('departement')
+                            ->options([
+                                'warehouse' => 'Warehouse',
+                                'Production' => 'Production',
+                                'Quality Control' => 'Quality Control',
+                                'SHE' => 'SHE',
+                                'PPIC' => 'PPIC',
+                                'Document Control' => 'Document Control',
+                                'HRD/GA' => 'HRD/GA',
+                                'Maintenance' => 'Maintenance',
+                            ])
+                            ->required()
+                            ->native(false)
+                            ->label('Departement'),
+                        Forms\Components\TextInput::make('email')
+                            ->required()
+                            ->email()
+                            ->unique(ignoreRecord: true)
+                            ->maxLength(255)
+                            ->helperText('use "@salimagro.com"')
+                            ->label('Email Company'),
+                        Password::make('password')
+                            ->password()
+                            ->dehydrateStateUsing(static fn (null|string $state): null|string => filled($state) ? Hash::make($state) : null,)
+                            ->required(static fn (Page $livewire): string => $livewire instanceof CreateUser,)
+                            ->dehydrated(static fn (null|string $state): bool => filled($state))
+                            ->label(static fn (Page $livewire): string => ($livewire instanceof EditUser) ? 'New Password' : 'Password')
+                            ->showIcon('heroicon-o-eye')
+                            ->hideIcon('heroicon-o-eye-open'),
+                        Forms\Components\Toggle::make('is_admin'),
+                    ])->columns([
+                        'sm' => 2
+                    ]),
+
+                Forms\Components\Section::make()
+                    ->schema([
+                        CheckboxList::make('roles')
+                            ->relationship('roles', 'name')
+                            ->columns(2)
+                            ->helperText('Hanya boleh pilih salah satu!')
+                            ->required(),
+                    ])
             ]);
     }
 
@@ -98,7 +134,7 @@ class UserResource extends Resource
     public static function getRelations(): array
     {
         return [
-            RolesRelationManager::class,
+            //RolesRelationManager::class,
         ];
     }
 
